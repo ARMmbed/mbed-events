@@ -16,12 +16,16 @@ class EventQueue {
 public:
     /** Create an event queue
      *
-     *  @param event_count      Number of events to allow enqueue at once (default: 32)
-     *  @param event_size       Maximum size of context of event (default: 0)
-     *  @param event_pointer    Pointer to memory region to use for events (default: NULL)
+     *  @param event_count      Number of events to allow enqueue at once
+     *                          (default: 32)
+     *  @param event_size       Maximum size of context of event
+     *                          (default: 0)
+     *  @param event_pointer    Pointer to memory region to use for events
+     *                          (default: NULL)
      */
-    EventQueue(unsigned event_count=32, unsigned event_size=0,
-            unsigned char *event_pointer=NULL);
+    EventQueue(unsigned event_count=32,
+               unsigned event_size=0,
+               unsigned char *event_pointer=NULL);
 
     /** Destroy an event queue
      */
