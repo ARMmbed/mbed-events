@@ -104,6 +104,10 @@ public:
     template <typename F>
     int post(F f) {
         void *p = event_alloc(&_equeue, sizeof(F));
+        if (!p) {
+            return -1;
+        }
+
         F *e = new (p) F(f);
         event_dtor(e, &EventQueue::dtor<F>);
         return event_post(&_equeue, &EventQueue::call<F>, e);
@@ -145,6 +149,10 @@ public:
     template <typename F>
     int post_in(F f, int ms) {
         void *p = event_alloc(&_equeue, sizeof(F));
+        if (!p) {
+            return -1;
+        }
+
         F *e = new (p) F(f);
         event_delay(e, ms);
         event_dtor(e, &EventQueue::dtor<F>);
@@ -187,6 +195,10 @@ public:
     template <typename F>
     int post_every(F f, int ms) {
         void *p = event_alloc(&_equeue, sizeof(F));
+        if (!p) {
+            return -1;
+        }
+
         F *e = new (p) F(f);
         event_delay(e, ms);
         event_period(e, ms);

@@ -134,6 +134,25 @@ void event_loop_test2() {
     wait_ms(N*100);
 }
 
+struct big { char data[1024]; } big;
+
+void allocate_failure_test1() {
+    EventQueue queue;
+    int id = queue.post((void (*)(struct big))0, big);
+    TEST_ASSERT(id < 0);
+}
+
+void allocate_failure_test2() {
+    EventQueue queue;
+    int id;
+
+    for (int i = 0; i < 100; i++) {
+        id = queue.post((void (*)())0);
+    }
+
+    TEST_ASSERT(id < 0);
+}
+
 
 // Test setup
 utest::v1::status_t test_setup(const size_t number_of_cases) {
@@ -152,8 +171,10 @@ Case cases[] = {
     Case("Testing post_in",    post_in_test<20>),
     Case("Testing post_every", post_every_test<20>),
 
-    Case("Testing event loop", event_loop_test1),
-    Case("Testing event loop", event_loop_test2<20>),
+    Case("Testing event loop 1", event_loop_test1),
+    Case("Testing event loop 2", event_loop_test2<20>),
+    Case("Testing allocate failure 1", allocate_failure_test1),
+    Case("Testing allocate failure 2", allocate_failure_test2),
 };
 
 Specification specification(test_setup, cases);
