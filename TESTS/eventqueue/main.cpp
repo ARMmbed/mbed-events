@@ -70,7 +70,7 @@ SIMPLE_POSTS_TEST(0)
 
 
 void time_func(Timer *t, int ms) {
-    TEST_ASSERT(abs(t->read_ms() - ms) <= 1);
+    TEST_ASSERT_INT_WITHIN(2, ms, t->read_ms());
     t->reset();
 }
 
@@ -81,8 +81,8 @@ void post_in_test() {
     EventQueue queue(N, sizeof &time_func + sizeof(Timer *) + sizeof(int));
 
     for (int i = 0; i < N; i++) {
-        queue.post_in(time_func, &tickers[i], (i+1)*100, (i+1)*100);
         tickers[i].start();
+        queue.post_in(time_func, &tickers[i], (i+1)*100, (i+1)*100);
     }
 
     queue.dispatch(N*100);
@@ -95,25 +95,44 @@ void post_every_test() {
     EventQueue queue(N, sizeof &time_func + sizeof(Timer *) + sizeof(int));
 
     for (int i = 0; i < N; i++) {
-        queue.post_every(time_func, &tickers[i], (i+1)*100, (i+1)*100);
         tickers[i].start();
+        queue.post_every(time_func, &tickers[i], (i+1)*100, (i+1)*100);
     }
 
     queue.dispatch(N*100);
 }
 
-void event_loop_test() {
+void event_loop_test1() {
     EventLoop loop;
-    loop.start();
+    osStatus status = loop.start();
+    TEST_ASSERT_EQUAL(osOK, status);
 
     touched = false;
     loop.post(func0);
     Thread::yield();
     TEST_ASSERT(touched);
 
-    loop.stop();
+    status = loop.stop();
+    TEST_ASSERT_EQUAL(osOK, status);
 }
 
+template <int N>
+void event_loop_test2() {
+    EventLoop loop(osPriorityHigh, N, sizeof &time_func + sizeof(Timer *) + sizeof(int));
+    osStatus status = loop.start();
+    TEST_ASSERT_EQUAL(osOK, status);
+
+    Timer tickers[N];
+
+    for (int i = 0; i < N; i++) {
+        tickers[i].start();
+        loop.post_every(time_func, &tickers[i], (i+1)*100, (i+1)*100);
+        Thread::yield();
+        wait_ms(75);
+    }
+
+    wait_ms(N*100);
+}
 
 
 // Test setup
@@ -133,7 +152,8 @@ Case cases[] = {
     Case("Testing post_in",    post_in_test<20>),
     Case("Testing post_every", post_every_test<20>),
 
-    Case("Testing event loop", event_loop_test),
+    Case("Testing event loop", event_loop_test1),
+    Case("Testing event loop", event_loop_test2<20>),
 };
 
 Specification specification(test_setup, cases);

@@ -38,13 +38,16 @@ osStatus EventLoop::start() {
 
 
 struct hcontext {
-    Semaphore *halted;
+    struct event e;
+    Semaphore halted;
 };
 
 MBED_NORETURN static void halt(void *p) {
-    hcontext *context = static_cast<hcontext*>(p);
-    context->halted->release();
-    while (1);
+    Semaphore *halted = static_cast<Semaphore*>(p);
+    halted->release();
+    while (true) {
+        Thread::wait(osWaitForever);
+    }
 }
 
 osStatus EventLoop::stop() {
@@ -53,17 +56,12 @@ osStatus EventLoop::stop() {
     }
 
     // Freeze the thread in a safe state
-    Semaphore halted(0);
-    hcontext *context = static_cast<hcontext*>(
-            event_alloc(&_equeue, sizeof(hcontext)));
-    context->halted = &halted;
-    event_post(&_equeue, halt, context);
-    halted.wait();
+    struct hcontext context = {{0}, Semaphore(0)};
+    event_delay(&context.halted, 0);
+    event_post(&_equeue, halt, &context.halted);
+    context.halted.wait();
 
-    // Kill the thread and clean up missed memory
-    _thread.terminate();
-    event_dealloc(&_equeue, context);
-
+    // Kill the thread
     osStatus status = _thread.terminate();
     _running = false;
     return status;
