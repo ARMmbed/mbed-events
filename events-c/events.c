@@ -148,7 +148,7 @@ static int equeue_wait(struct equeue *q, int id, int ms) {
     }
 
     events_mutex_lock(&q->queuelock);
-    if (q->head->id == id) {
+    if (q->head && q->head->id == id) {
         e = q->head;
     } else {
         for (struct event **p = &q->queue; *p; p = &(*p)->next) {
@@ -174,7 +174,12 @@ static int equeue_wait(struct equeue *q, int id, int ms) {
     e->sema = &sema;
     events_mutex_unlock(&q->queuelock);
 
-    return events_sema_wait(&sema, ms);
+    err = events_sema_wait(&sema, ms);
+    if (err) {
+        e->sema = 0;
+    }
+
+    return err;
 }
 
 static void equeue_cancel(struct equeue *q, int id) {
@@ -230,14 +235,11 @@ void equeue_dispatch(struct equeue *q, int ms) {
             // actually dispatch the callback
             e->cb(e + 1);
 
-            events_mutex_lock(&q->queuelock);
             q->head = 0;
 
             if (e->sema) {
                 events_sema_release(e->sema);
-                e->sema = 0;
             }
-            events_mutex_unlock(&q->queuelock);
 
             if (e->period < 0) {
                 equeue_dealloc(q, e);

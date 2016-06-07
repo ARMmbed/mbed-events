@@ -66,6 +66,7 @@ public:
 
 private:
     rtos::Thread _thread;
+    bool _running;
 };
 
 

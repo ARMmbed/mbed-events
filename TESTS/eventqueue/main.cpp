@@ -1,5 +1,6 @@
 #include "events.h"
 #include "mbed.h"
+#include "rtos.h"
 #include "greentea-client/test_env.h"
 #include "unity.h"
 #include "utest.h"
@@ -101,6 +102,18 @@ void post_every_test() {
     queue.dispatch(N*100);
 }
 
+void event_loop_test() {
+    EventLoop loop;
+    loop.start();
+
+    touched = false;
+    loop.post(func0);
+    Thread::yield();
+    TEST_ASSERT(touched);
+
+    loop.stop();
+}
+
 
 
 // Test setup
@@ -119,6 +132,8 @@ Case cases[] = {
 
     Case("Testing post_in",    post_in_test<20>),
     Case("Testing post_every", post_every_test<20>),
+
+    Case("Testing event loop", event_loop_test),
 };
 
 Specification specification(test_setup, cases);

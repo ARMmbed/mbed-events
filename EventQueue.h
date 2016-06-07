@@ -67,7 +67,7 @@ public:
      *              timeout will wait forever. (default: -1)
      *  @return     Returns a negative value if event has not completed.
      */
-    int wait(int id, int ms);
+    int wait(int id, int ms=-1);
 
     /** Cancel events that are in flight
      *

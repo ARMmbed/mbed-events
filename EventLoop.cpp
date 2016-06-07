@@ -13,7 +13,8 @@ EventLoop::EventLoop(
         uint32_t stack_size,
         unsigned char *stack_pointer)
     : EventQueue(event_count, event_size, event_pointer)
-    , _thread(priority, stack_size, stack_pointer) {
+    , _thread(priority, stack_size, stack_pointer)
+    , _running(false) {
 }
 
 EventLoop::~EventLoop() {
@@ -26,7 +27,13 @@ MBED_NORETURN static void run(EventLoop *loop) {
 }
 
 osStatus EventLoop::start() {
-    return _thread.start(this, run);
+    if (_running) {
+        return osOK;
+    }
+
+    osStatus status = _thread.start(this, run);
+    _running = (status == osOK);
+    return status;
 }
 
 MBED_NORETURN static void halt(Semaphore *halted) {
@@ -35,9 +42,15 @@ MBED_NORETURN static void halt(Semaphore *halted) {
 }
 
 osStatus EventLoop::stop() {
+    if (!_running) {
+        return osOK;
+    }
+
     Semaphore halted(0);
     post(halt, &halted);
     halted.wait();
 
-    return _thread.terminate();
+    osStatus status = _thread.terminate();
+    _running = false;
+    return status;
 }
