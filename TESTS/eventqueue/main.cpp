@@ -153,6 +153,30 @@ void allocate_failure_test2() {
     TEST_ASSERT(id < 0);
 }
 
+void no() {
+    TEST_ASSERT(false);
+}
+
+template <int N>
+void cancel_test() {
+    EventLoop loop;
+    osStatus status = loop.start();
+    TEST_ASSERT_EQUAL(osOK, status);
+
+    int ids[N];
+
+    for (int i = 0; i < N; i++) {
+        ids[i] = loop.post_in(no, 1000);
+    }
+
+    for (int i = N-1; i >= 0; i--) {
+        loop.cancel(ids[i]);
+    }
+
+    status = loop.stop();
+    TEST_ASSERT_EQUAL(osOK, status);
+}
+
 
 // Test setup
 utest::v1::status_t test_setup(const size_t number_of_cases) {
@@ -173,8 +197,11 @@ Case cases[] = {
 
     Case("Testing event loop 1", event_loop_test1),
     Case("Testing event loop 2", event_loop_test2<20>),
+
     Case("Testing allocate failure 1", allocate_failure_test1),
     Case("Testing allocate failure 2", allocate_failure_test2),
+
+    Case("Testing event cancel", cancel_test<20>),
 };
 
 Specification specification(test_setup, cases);
