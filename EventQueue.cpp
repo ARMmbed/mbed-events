@@ -30,10 +30,6 @@ unsigned EventQueue::get_tick() {
     return events_tick();
 }
 
-int EventQueue::wait(int id, int ms) {
-    return event_wait(&_equeue, id, ms);
-}
-
 void EventQueue::cancel(int id) {
     return event_cancel(&_equeue, id);
 }
