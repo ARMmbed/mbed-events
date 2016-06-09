@@ -47,9 +47,9 @@ public:
     ~EventQueue();
 
     /** Dispatch pending events
-     *  @param ms   Time to wait for events in milliseconds,
-     *              0 will return immediately if no events are pending
-     *              -1 will dispatch events forever
+     *  @param ms   Time to wait for events in milliseconds, 0 will return
+     *              immediately if no events are pending, a negative
+     *              value will dispatch events forever
      *              (default: -1)
      */
     void dispatch(int ms=-1);
@@ -73,8 +73,8 @@ public:
      *
      *  @param f        Function to call on event dispatch
      *  @param a0..a4   Arguments to pass to the callback
-     *  @return         A positive id representing the event in the queue, or
-     *                  a negative value on failure
+     *  @return         A positive id representing the event in the queue,
+     *                  or 0 on failure
      */
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
     int post(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
@@ -105,7 +105,7 @@ public:
     int post(F f) {
         void *p = event_alloc(&_equeue, sizeof(F));
         if (!p) {
-            return -1;
+            return 0;
         }
 
         F *e = new (p) F(f);
@@ -118,8 +118,8 @@ public:
      *  @param f        Function to call on event dispatch
      *  @param a0..a4   Arguments to pass to the callback
      *  @param ms       Time to delay in milliseconds
-     *  @return         A positive id representing the event in the queue, or
-     *                  a negative value on failure
+     *  @return         A positive id representing the event in the queue,
+     *                  or 0 on failure
      */
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
     int post_in(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, int ms) {
@@ -150,7 +150,7 @@ public:
     int post_in(F f, int ms) {
         void *p = event_alloc(&_equeue, sizeof(F));
         if (!p) {
-            return -1;
+            return 0;
         }
 
         F *e = new (p) F(f);
@@ -164,8 +164,8 @@ public:
      *  @param f        Function to call on event dispatch
      *  @param a0..a4   Arguments to pass to the callback
      *  @param ms       Period of the event in milliseconds
-     *  @return         A positive id representing the event in the queue, or
-     *                  a negative value on failure
+     *  @return         A positive id representing the event in the queue,
+     *                  or 0 on failure
      */
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
     int post_every(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, int ms) {
@@ -196,7 +196,7 @@ public:
     int post_every(F f, int ms) {
         void *p = event_alloc(&_equeue, sizeof(F));
         if (!p) {
-            return -1;
+            return 0;
         }
 
         F *e = new (p) F(f);

@@ -84,15 +84,15 @@ queue.post_every(printf, "called every 0.4 seconds\n", 400);
 ```
 
 All post calls return an integer id that uniquely represents the event
-on the event queue. The post calls can not block, so a negative id is
-returned if there is no memory or the queue's event size is exceeded.
+on the event queue. The post calls can not block, so 0 is returned if
+there is no memory or the queue's event size is exceeded.
 
 ``` cpp
 // The event id is uniqueue to the queue
 int id = queue.post_in(printf, "will this work?\n", 100);
 
-// A negative id indicates an error
-if (id < 0) {
+// An id of 0 indicates an error
+if (id) {
     error("oh no!");
 }
 
