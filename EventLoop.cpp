@@ -1,3 +1,4 @@
+#ifdef MBED_CONF_RTOS_PRESENT
 #include "EventLoop.h"
 
 #include "events.h"
@@ -66,3 +67,5 @@ osStatus EventLoop::stop() {
     _running = false;
     return status;
 }
+
+#endif

@@ -102,6 +102,7 @@ void post_every_test() {
     queue.dispatch(N*100);
 }
 
+#ifdef MBED_CONF_RTOS_PRESENT
 void event_loop_test1() {
     EventLoop loop;
     osStatus status = loop.start();
@@ -133,6 +134,7 @@ void event_loop_test2() {
 
     wait_ms(N*100);
 }
+#endif
 
 struct big { char data[1024]; } big;
 
@@ -158,7 +160,25 @@ void no() {
 }
 
 template <int N>
-void cancel_test() {
+void cancel_test1() {
+    EventQueue queue;
+
+    int ids[N];
+
+    for (int i = 0; i < N; i++) {
+        ids[i] = queue.post_in(no, 1000);
+    }
+
+    for (int i = N-1; i >= 0; i--) {
+        queue.cancel(ids[i]);
+    }
+
+    queue.dispatch(0);
+}
+
+#ifdef MBED_CONF_RTOS_PRESENT
+template <int N>
+void cancel_test2() {
     EventLoop loop;
     osStatus status = loop.start();
     TEST_ASSERT_EQUAL(osOK, status);
@@ -176,6 +196,7 @@ void cancel_test() {
     status = loop.stop();
     TEST_ASSERT_EQUAL(osOK, status);
 }
+#endif
 
 
 // Test setup
@@ -195,13 +216,18 @@ Case cases[] = {
     Case("Testing post_in",    post_in_test<20>),
     Case("Testing post_every", post_every_test<20>),
 
+#ifdef MBED_CONF_RTOS_PRESENT
     Case("Testing event loop 1", event_loop_test1),
     Case("Testing event loop 2", event_loop_test2<20>),
+#endif
 
     Case("Testing allocate failure 1", allocate_failure_test1),
     Case("Testing allocate failure 2", allocate_failure_test2),
 
-    Case("Testing event cancel", cancel_test<20>),
+    Case("Testing event cancel 1", cancel_test1<20>),
+#ifdef MBED_CONF_RTOS_PRESENT
+    Case("Testing event cancel 2", cancel_test2<20>),
+#endif
 };
 
 Specification specification(test_setup, cases);

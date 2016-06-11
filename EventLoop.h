@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#ifdef MBED_CONF_RTOS_PRESENT
 #ifndef EVENT_LOOP_H
 #define EVENT_LOOP_H
 
@@ -72,4 +73,5 @@ private:
 
 }
 
+#endif
 #endif
