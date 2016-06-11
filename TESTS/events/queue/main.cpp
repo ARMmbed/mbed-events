@@ -139,7 +139,7 @@ struct big { char data[1024]; } big;
 void allocate_failure_test1() {
     EventQueue queue;
     int id = queue.post((void (*)(struct big))0, big);
-    TEST_ASSERT(id < 0);
+    TEST_ASSERT(!id);
 }
 
 void allocate_failure_test2() {
@@ -150,7 +150,7 @@ void allocate_failure_test2() {
         id = queue.post((void (*)())0);
     }
 
-    TEST_ASSERT(id < 0);
+    TEST_ASSERT(!id);
 }
 
 void no() {
@@ -180,7 +180,7 @@ void cancel_test() {
 
 // Test setup
 utest::v1::status_t test_setup(const size_t number_of_cases) {
-    GREENTEA_SETUP(5, "default_auto");
+    //GREENTEA_SETUP(5, "default_auto");
     return verbose_test_setup_handler(number_of_cases);
 }
 
