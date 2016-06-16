@@ -22,9 +22,8 @@ EventLoop::~EventLoop() {
     stop();
 }
 
-MBED_NORETURN static void run(EventLoop *loop) {
+static void run(EventLoop *loop) {
     loop->dispatch();
-    MBED_UNREACHABLE;
 }
 
 osStatus EventLoop::start() {
@@ -37,33 +36,13 @@ osStatus EventLoop::start() {
     return status;
 }
 
-
-struct hcontext {
-    struct event e;
-    Semaphore halted;
-};
-
-MBED_NORETURN static void halt(void *p) {
-    Semaphore *halted = static_cast<Semaphore*>(p);
-    halted->release();
-    while (true) {
-        Thread::wait(osWaitForever);
-    }
-}
-
 osStatus EventLoop::stop() {
     if (!_running) {
         return osOK;
     }
 
-    // Freeze the thread in a safe state
-    struct hcontext context = {{0}, Semaphore(0)};
-    event_delay(&context.halted, 0);
-    event_post(&_equeue, halt, &context.halted);
-    context.halted.wait();
-
-    // Kill the thread
-    osStatus status = _thread.terminate();
+    break_();
+    osStatus status = _thread.join();
     _running = false;
     return status;
 }

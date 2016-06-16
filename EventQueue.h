@@ -208,6 +208,8 @@ public:
 
 
 protected:
+    void break_();
+
     struct equeue _equeue;
 
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
