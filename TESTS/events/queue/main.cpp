@@ -43,7 +43,7 @@ void func0() {
 
 #define SIMPLE_POSTS_TEST(i, ...)                           \
 void simple_posts_test##i() {                               \
-    EventQueue queue(32, sizeof &func##i + i*sizeof(int));  \
+    EventQueue queue;                                       \
                                                             \
     touched = false;                                        \
     queue.post(func##i,##__VA_ARGS__);                      \
@@ -78,7 +78,7 @@ template <int N>
 void post_in_test() {
     Timer tickers[N];
 
-    EventQueue queue(N, sizeof &time_func + sizeof(Timer *) + sizeof(int));
+    EventQueue queue;
 
     for (int i = 0; i < N; i++) {
         tickers[i].start();
@@ -92,7 +92,7 @@ template <int N>
 void post_every_test() {
     Timer tickers[N];
 
-    EventQueue queue(N, sizeof &time_func + sizeof(Timer *) + sizeof(int));
+    EventQueue queue;
 
     for (int i = 0; i < N; i++) {
         tickers[i].start();
@@ -119,7 +119,7 @@ void event_loop_test1() {
 
 template <int N>
 void event_loop_test2() {
-    EventLoop loop(osPriorityHigh, N, sizeof &time_func + sizeof(Timer *) + sizeof(int));
+    EventLoop loop(osPriorityHigh);
     osStatus status = loop.start();
     TEST_ASSERT_EQUAL(osOK, status);
 
@@ -136,7 +136,7 @@ void event_loop_test2() {
 }
 #endif
 
-struct big { char data[1024]; } big;
+struct big { char data[4096]; } big;
 
 void allocate_failure_test1() {
     EventQueue queue;
@@ -205,7 +205,7 @@ utest::v1::status_t test_setup(const size_t number_of_cases) {
     return verbose_test_setup_handler(number_of_cases);
 }
 
-Case cases[] = {
+const Case cases[] = {
     Case("Testing posts with 5 args", simple_posts_test5),
     Case("Testing posts with 4 args", simple_posts_test4),
     Case("Testing posts with 3 args", simple_posts_test3),

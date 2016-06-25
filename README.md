@@ -24,17 +24,12 @@ int main() {
 ### Usage ###
 
 The core API of the events library is contained in the
-[EventQueue](EventQueue.h) class. To perform efficient event allocation
-in irq contexts, the EventQueue uses a fixed-size buffer that is configured
-at construction time.
+[EventQueue](EventQueue.h) class.
 
 ``` cpp
-// Creates an event queue with enough buffer space for 32 events. Each event
-// is allocated with enough space for at least a callback and a string.
-EventQueue queue(32, sizeof(struct {
-    Callback<void()> func;
-    const char *str;
-}));
+// Creates an event queue with 2048 bytes of buffer space to use
+// for enqueueing events. The default is enough for 32 callbacks.
+EventQueue queue(2048);
 
 // Enqueues events on the underlying event queue
 queue.post(printf, "hi!\n");
@@ -48,9 +43,8 @@ Additionally, the events library provides the [EventLoop](EventLoop.h) class,
 which combines the EventQueue with a Thread.
 
 ``` cpp
-// Creates a high priority event loop. By default events can contain
-// only a Callback<void()>
-EventLoop loop(osHighPriority, 12);
+// Creates a high priority event loop.
+EventLoop loop(osHighPriority);
 
 // Starts the loop in a separate thread
 loop.start();

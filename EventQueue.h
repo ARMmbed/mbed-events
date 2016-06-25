@@ -17,10 +17,18 @@
 #define EVENT_QUEUE_H
 
 #include "events-c/events.h"
+#include "Callback.h"
 #include <cstddef>
 #include <new>
 
 namespace events {
+
+
+/** DEFAULT_QUEUE_SIZE
+ *  default size of buffer for events
+ */
+#define DEFAULT_QUEUE_SIZE \
+    (32*(sizeof(struct event) + sizeof(mbed::Callback<void()>)))
 
 
 /** EventQueue
@@ -31,16 +39,13 @@ class EventQueue {
 public:
     /** Create an event queue
      *
-     *  @param event_count      Number of events to allow enqueue at once
-     *                          (default: 32)
-     *  @param event_size       Maximum size of context of event
-     *                          (default: 0)
-     *  @param event_pointer    Pointer to memory region to use for events
+     *  @param queue_size       Size of buffer to use for events
+     *                          (default: DEFAULT_QUEUE_SIZE)
+     *  @param queue_pointer    Pointer to memory region to use for events
      *                          (default: NULL)
      */
-    EventQueue(unsigned event_count=32,
-               unsigned event_size=0,
-               unsigned char *event_pointer=NULL);
+    EventQueue(unsigned queue_size=DEFAULT_QUEUE_SIZE,
+               unsigned char *queue_pointer=NULL);
 
     /** Destroy an event queue
      */

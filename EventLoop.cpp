@@ -8,12 +8,11 @@
 
 EventLoop::EventLoop(
         osPriority priority,
-        unsigned event_count,
         unsigned event_size,
         unsigned char *event_pointer,
         uint32_t stack_size,
         unsigned char *stack_pointer)
-    : EventQueue(event_count, event_size, event_pointer)
+    : EventQueue(event_size, event_pointer)
     , _thread(priority, stack_size, stack_pointer)
     , _running(false) {
 }

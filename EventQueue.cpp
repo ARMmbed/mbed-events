@@ -5,16 +5,11 @@
 #include "mbed.h"
 
 
-EventQueue::EventQueue(unsigned event_count, unsigned event_size,
-        unsigned char *event_pointer) {
-    if (event_size < sizeof(Callback<void()>)) {
-        event_size = sizeof(Callback<void()>);
-    }
-
+EventQueue::EventQueue(unsigned event_size, unsigned char *event_pointer) {
     if (!event_pointer) {
-        equeue_create(&_equeue, event_count, event_size);
+        equeue_create(&_equeue, event_size);
     } else {
-        equeue_create_inplace(&_equeue, event_count, event_size, event_pointer);
+        equeue_create_inplace(&_equeue, event_size, event_pointer);
     }
 }
 

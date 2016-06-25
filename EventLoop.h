@@ -33,11 +33,9 @@ public:
      *
      *  @param priority         Initial priority of the thread
      *                          (default: osPriorityNormal)
-     *  @param event_count      Number of events to allow enqueue at once
-     *                          (default: 32)
-     *  @param event_size       Maximum size of context of event
-     *                          (default: 0)
-     *  @param event_pointer    Pointer to memory region to use for events
+     *  @param queue_size       Size of buffer to use for events
+     *                          (default: DEFAULT_QUEUE_SIZE)
+     *  @param queue_pointer    Pointer to memory region to use for events
      *                          (default: NULL)
      *  @param stack_size       Stack size (in bytes) requirements for the thread
      *                          (default: DEFAULT_STACK_SIZE)
@@ -45,8 +43,7 @@ public:
      *                          (default: NULL)
      */
     EventLoop(osPriority priority=osPriorityNormal,
-              unsigned event_count=32,
-              unsigned event_size=0,
+              unsigned event_size=DEFAULT_QUEUE_SIZE,
               unsigned char *event_pointer=NULL,
               uint32_t stack_size=DEFAULT_STACK_SIZE,
               unsigned char *stack_pointer=NULL);
