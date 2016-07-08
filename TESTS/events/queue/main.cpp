@@ -51,12 +51,12 @@ void simple_posts_test##i() {                               \
     TEST_ASSERT(touched);                                   \
                                                             \
     touched = false;                                        \
-    queue.post_in(func##i,##__VA_ARGS__, 1);                \
+    queue.post_in(1, func##i,##__VA_ARGS__);                \
     queue.dispatch(2);                                      \
     TEST_ASSERT(touched);                                   \
                                                             \
     touched = false;                                        \
-    queue.post_every(func##i,##__VA_ARGS__, 1);             \
+    queue.post_every(1, func##i,##__VA_ARGS__);             \
     queue.dispatch(2);                                      \
     TEST_ASSERT(touched);                                   \
 }
@@ -82,7 +82,7 @@ void post_in_test() {
 
     for (int i = 0; i < N; i++) {
         tickers[i].start();
-        queue.post_in(time_func, &tickers[i], (i+1)*100, (i+1)*100);
+        queue.post_in((i+1)*100, time_func, &tickers[i], (i+1)*100);
     }
 
     queue.dispatch(N*100);
@@ -96,7 +96,7 @@ void post_every_test() {
 
     for (int i = 0; i < N; i++) {
         tickers[i].start();
-        queue.post_every(time_func, &tickers[i], (i+1)*100, (i+1)*100);
+        queue.post_every((i+1)*100, time_func, &tickers[i], (i+1)*100);
     }
 
     queue.dispatch(N*100);
@@ -127,7 +127,7 @@ void event_loop_test2() {
 
     for (int i = 0; i < N; i++) {
         tickers[i].start();
-        loop.post_every(time_func, &tickers[i], (i+1)*100, (i+1)*100);
+        loop.post_every((i+1)*100, time_func, &tickers[i], (i+1)*100);
         Thread::yield();
         wait_ms(75);
     }
@@ -166,7 +166,7 @@ void cancel_test1() {
     int ids[N];
 
     for (int i = 0; i < N; i++) {
-        ids[i] = queue.post_in(no, 1000);
+        ids[i] = queue.post_in(1000, no);
     }
 
     for (int i = N-1; i >= 0; i--) {
@@ -186,7 +186,7 @@ void cancel_test2() {
     int ids[N];
 
     for (int i = 0; i < N; i++) {
-        ids[i] = loop.post_in(no, 1000);
+        ids[i] = loop.post_in(1000, no);
     }
 
     for (int i = N-1; i >= 0; i--) {
