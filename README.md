@@ -12,8 +12,8 @@ int main() {
 
     // events are simple callbacks
     queue.post(printf, "called immediately\n");
-    queue.post_in(printf, "called in 2 seconds\n", 2000);
-    queue.post_every(printf, "called every 1 seconds\n", 1000);
+    queue.post_in(printf, 2000, "called in 2 seconds\n");
+    queue.post_every(printf, 1000, "called every 1 seconds\n");
 
     // executed by the dispatch method
     queue.dispatch();
@@ -68,13 +68,13 @@ queue.post(Callback<void(char)>(&serial, &Serial::printf), "hello\n");
 
 // The post_in function registers events to be called after a delay
 // specified in milliseconds
-queue.post_in(doit_in_two_seconds, 2000);
-queue.post_in(printf, "called in 0.3 seconds\n", 300);
+queue.post_in(2000, doit_in_two_seconds);
+queue.post_in(300, printf, "called in 0.3 seconds\n");
 
 // The post_every function registers events to be called repeatedly
 // with a period specified in milliseconds
-queue.post_every(doit_every_two_seconds, 2000);
-queue.post_every(printf, "called every 0.4 seconds\n", 400);
+queue.post_every(2000, doit_every_two_seconds);
+queue.post_every(400, printf, "called every 0.4 seconds\n");
 ```
 
 All post calls return an integer id that uniquely represents the event
@@ -83,7 +83,7 @@ there is no memory or the queue's event size is exceeded.
 
 ``` cpp
 // The event id is uniqueue to the queue
-int id = queue.post_in(printf, "will this work?\n", 100);
+int id = queue.post_in(100, printf, "will this work?\n");
 
 // An id of 0 indicates an error
 if (id) {

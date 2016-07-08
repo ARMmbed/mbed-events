@@ -127,32 +127,32 @@ public:
      *                  or 0 on failure
      */
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
-    int post_in(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, int ms) {
-        return post_in(Context5<F,A0,A1,A2,A3,A4>(f,a0,a1,a2,a3,a4), ms);
+    int post_in(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+        return post_in(ms, Context5<F,A0,A1,A2,A3,A4>(f,a0,a1,a2,a3,a4));
     }
 
     template <typename F, typename A0, typename A1, typename A2, typename A3>
-    int post_in(F f, A0 a0, A1 a1, A2 a2, A3 a3, int ms) {
-        return post_in(Context4<F,A0,A1,A2,A3>(f,a0,a1,a2,a3), ms);
+    int post_in(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3) {
+        return post_in(ms, Context4<F,A0,A1,A2,A3>(f,a0,a1,a2,a3));
     }
 
     template <typename F, typename A0, typename A1, typename A2>
-    int post_in(F f, A0 a0, A1 a1, A2 a2, int ms) {
-        return post_in(Context3<F,A0,A1,A2>(f,a0,a1,a2), ms);
+    int post_in(int ms, F f, A0 a0, A1 a1, A2 a2) {
+        return post_in(ms, Context3<F,A0,A1,A2>(f,a0,a1,a2));
     }
 
     template <typename F, typename A0, typename A1>
-    int post_in(F f, A0 a0, A1 a1, int ms) {
-        return post_in(Context2<F,A0,A1>(f,a0,a1), ms);
+    int post_in(int ms, F f, A0 a0, A1 a1) {
+        return post_in(ms, Context2<F,A0,A1>(f,a0,a1));
     }
 
     template <typename F, typename A0>
-    int post_in(F f, A0 a0, int ms) {
-        return post_in(Context1<F,A0>(f,a0), ms);
+    int post_in(int ms, F f, A0 a0) {
+        return post_in(ms, Context1<F,A0>(f,a0));
     }
 
     template <typename F>
-    int post_in(F f, int ms) {
+    int post_in(int ms, F f) {
         void *p = event_alloc(&_equeue, sizeof(F));
         if (!p) {
             return 0;
@@ -173,32 +173,32 @@ public:
      *                  or 0 on failure
      */
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
-    int post_every(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4, int ms) {
-        return post_every(Context5<F,A0,A1,A2,A3,A4>(f,a0,a1,a2,a3,a4), ms);
+    int post_every(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+        return post_every(ms, Context5<F,A0,A1,A2,A3,A4>(f,a0,a1,a2,a3,a4));
     }
 
     template <typename F, typename A0, typename A1, typename A2, typename A3>
-    int post_every(F f, A0 a0, A1 a1, A2 a2, A3 a3, int ms) {
-        return post_every(Context4<F,A0,A1,A2,A3>(f,a0,a1,a2,a3), ms);
+    int post_every(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3) {
+        return post_every(ms, Context4<F,A0,A1,A2,A3>(f,a0,a1,a2,a3));
     }
 
     template <typename F, typename A0, typename A1, typename A2>
-    int post_every(F f, A0 a0, A1 a1, A2 a2, int ms) {
-        return post_every(Context3<F,A0,A1,A2>(f,a0,a1,a2), ms);
+    int post_every(int ms, F f, A0 a0, A1 a1, A2 a2) {
+        return post_every(ms, Context3<F,A0,A1,A2>(f,a0,a1,a2));
     }
 
     template <typename F, typename A0, typename A1>
-    int post_every(F f, A0 a0, A1 a1, int ms) {
-        return post_every(Context2<F,A0,A1>(f,a0,a1), ms);
+    int post_every(int ms, F f, A0 a0, A1 a1) {
+        return post_every(ms, Context2<F,A0,A1>(f,a0,a1));
     }
 
     template <typename F, typename A0>
-    int post_every(F f, A0 a0, int ms) {
-        return post_every(Context1<F,A0>(f,a0), ms);
+    int post_every(int ms, F f, A0 a0) {
+        return post_every(ms, Context1<F,A0>(f,a0));
     }
 
     template <typename F>
-    int post_every(F f, int ms) {
+    int post_every(int ms, F f) {
         void *p = event_alloc(&_equeue, sizeof(F));
         if (!p) {
             return 0;
