@@ -11,9 +11,9 @@ int main() {
     EventQueue queue;
 
     // events are simple callbacks
-    queue.post(printf, "called immediately\n");
-    queue.post_in(printf, 2000, "called in 2 seconds\n");
-    queue.post_every(printf, 1000, "called every 1 seconds\n");
+    queue.call(printf, "called immediately\n");
+    queue.call_in(2000, printf, "called in 2 seconds\n");
+    queue.call_every(1000, printf, "called every 1 seconds\n");
 
     // executed by the dispatch method
     queue.dispatch();
@@ -33,7 +33,7 @@ The core API of the events library is contained in the
 EventQueue queue(2048);
 
 // Enqueues events on the underlying event queue
-queue.post(printf, "hi!\n");
+queue.call(printf, "hi!\n");
 
 // The dispatch method acts as the core entry point into the event loop
 // A millisecond timeout can be provided to return from the event loop
@@ -51,40 +51,40 @@ EventLoop loop(osHighPriority);
 loop.start();
 
 // Posting events is thread and irq safe
-loop.post(doit);
+loop.call(doit);
 
 // Stops the event loop cleanly
 loop.stop();
 ```
 
-The EventQueue and EvenLoop classes provide several post functions for
-sending events. The post functions are thread and irq safe and don't need
+The EventQueue and EvenLoop classes provide several call functions for
+sending events. The call functions are thread and irq safe and don't need
 the underlying loop to be running.
 
 ``` cpp
-// Simple post function registers events to be called as soon as possible
-queue.post(doit);
-queue.post(printf, "called immediately\n");
-queue.post(Callback<void(char)>(&serial, &Serial::printf), "hello\n");
+// Simple call function registers events to be called as soon as possible
+queue.call(doit);
+queue.call(printf, "called immediately\n");
+queue.call(Callback<void(char)>(&serial, &Serial::printf), "hello\n");
 
-// The post_in function registers events to be called after a delay
+// The call_in function registers events to be called after a delay
 // specified in milliseconds
-queue.post_in(2000, doit_in_two_seconds);
-queue.post_in(300, printf, "called in 0.3 seconds\n");
+queue.call_in(2000, doit_in_two_seconds);
+queue.call_in(300, printf, "called in 0.3 seconds\n");
 
-// The post_every function registers events to be called repeatedly
+// The call_every function registers events to be called repeatedly
 // with a period specified in milliseconds
-queue.post_every(2000, doit_every_two_seconds);
-queue.post_every(400, printf, "called every 0.4 seconds\n");
+queue.call_every(2000, doit_every_two_seconds);
+queue.call_every(400, printf, "called every 0.4 seconds\n");
 ```
 
-All post calls return an integer id that uniquely represents the event
-on the event queue. The post calls can not block, so 0 is returned if
+All call calls return an integer id that uniquely represents the event
+on the event queue. The call calls can not block, so 0 is returned if
 there is no memory or the queue's event size is exceeded.
 
 ``` cpp
 // The event id is uniqueue to the queue
-int id = queue.post_in(100, printf, "will this work?\n");
+int id = queue.call_in(100, printf, "will this work?\n");
 
 // An id of 0 indicates an error
 if (id) {
