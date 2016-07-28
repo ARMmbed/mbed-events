@@ -16,9 +16,18 @@
 #ifndef EVENTS_CPP_H
 #define EVENTS_CPP_H
 
+
+#include "events-c/events.h"
+
+
+#ifdef __cplusplus
+
 #include "EventQueue.h"
 #include "EventLoop.h"
 
 using namespace events;
+
+#endif
+
 
 #endif
