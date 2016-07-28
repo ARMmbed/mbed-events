@@ -1,5 +1,8 @@
 /* 
  * System specific semaphore implementation
+ *
+ * Copyright (c) 2016 Christopher Haster
+ * Distributed under the MIT license
  */
 #ifndef EVENTS_SEMA_H
 #define EVENTS_SEMA_H
@@ -16,11 +19,8 @@ extern "C" {
 // Optimal implementation is a binary semaphore,
 // however a regular semaphore is sufficient.
 #if defined(__unix__)
-#include <pthread.h>
-typedef struct {
-    pthread_mutex_t mutex;
-    pthread_cond_t cond;
-} events_sema_t;
+#include <semaphore.h>
+typedef sem_t events_sema_t;
 #elif defined(__MBED__)
 #ifdef MBED_CONF_RTOS_PRESENT
 typedef void *events_sema_t;
