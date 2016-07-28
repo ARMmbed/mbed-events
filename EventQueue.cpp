@@ -1,6 +1,6 @@
 #include "EventQueue.h"
 
-#include "events.h"
+#include "mbed_events.h"
 #include "mbed.h"
 
 

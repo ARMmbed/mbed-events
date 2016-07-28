@@ -1,4 +1,4 @@
-#include "events.h"
+#include "mbed_events.h"
 #include "mbed.h"
 #include "rtos.h"
 #include "greentea-client/test_env.h"

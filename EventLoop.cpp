@@ -1,7 +1,7 @@
 #ifdef MBED_CONF_RTOS_PRESENT
 #include "EventLoop.h"
 
-#include "events.h"
+#include "mbed_events.h"
 #include "rtos.h"
 #include "mbed.h"
 

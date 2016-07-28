@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef EVENTS_CPP_H
-#define EVENTS_CPP_H
+#ifndef MBED_EVENTS_H
+#define MBED_EVENTS_H
 
 
 #include "events-c/events.h"

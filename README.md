@@ -3,7 +3,7 @@
 The events library provides a flexible event queue for scheduling events.
 
 ``` cpp
-#include "events.h"
+#include "mbed_events.h"
 #include <stdio.h>
 
 int main() {
