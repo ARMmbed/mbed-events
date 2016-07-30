@@ -29,6 +29,6 @@ unsigned EventQueue::get_tick() {
 }
 
 void EventQueue::cancel(int id) {
-    return event_cancel(&_equeue, id);
+    return equeue_cancel(&_equeue, id);
 }
 
