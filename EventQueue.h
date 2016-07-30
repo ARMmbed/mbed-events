@@ -24,11 +24,17 @@
 namespace events {
 
 
+/** EVENTS_EVENT_SIZE
+ *  Minimum size of an event
+ *  This size fits a Callback<void()> at minimum
+ */
+#undef EVENTS_EVENT_SIZE
+#define EVENTS_EVENT_SIZE (sizeof(struct event) + sizeof(void*) + sizeof(mbed::Callback<void()>))
+
 /** DEFAULT_QUEUE_SIZE
  *  default size of buffer for events
  */
-#define DEFAULT_QUEUE_SIZE \
-    (32*(sizeof(struct event) + sizeof(mbed::Callback<void()>)))
+#define DEFAULT_QUEUE_SIZE (32*EVENTS_EVENT_SIZE)
 
 
 /** EventQueue

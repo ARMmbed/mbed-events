@@ -28,7 +28,8 @@ The core API of the events library is contained in the
 
 ``` cpp
 // Creates an event queue with 2048 bytes of buffer space to use
-// for enqueueing events. The default is enough for 32 callbacks.
+// for enqueueing events. With no argument, the default buffer is
+// allocated with enough space for 32 Callback classes.
 EventQueue queue(2048);
 
 // Enqueues events on the underlying event queue
