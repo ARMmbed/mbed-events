@@ -25,7 +25,7 @@ void EventQueue::break_() {
 }
 
 unsigned EventQueue::get_tick() {
-    return events_tick();
+    return equeue_tick();
 }
 
 void EventQueue::cancel(int id) {

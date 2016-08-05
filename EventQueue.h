@@ -16,7 +16,7 @@
 #ifndef EVENT_QUEUE_H
 #define EVENT_QUEUE_H
 
-#include "events-c/events.h"
+#include "equeue/equeue.h"
 #include "Callback.h"
 #include <cstddef>
 #include <new>
@@ -28,8 +28,8 @@ namespace events {
  *  Minimum size of an event
  *  This size fits a Callback<void()> at minimum
  */
-#undef EVENTS_EVENT_SIZE
-#define EVENTS_EVENT_SIZE (sizeof(struct event) + sizeof(void*) + sizeof(mbed::Callback<void()>))
+#define EVENTS_EVENT_SIZE \
+    (EQUEUE_EVENT_SIZE - 2*sizeof(void*) + sizeof(mbed::Callback<void()>))
 
 /** DEFAULT_QUEUE_SIZE
  *  default size of buffer for events
@@ -95,7 +95,7 @@ public:
         }
 
         F *e = new (p) F(f);
-        event_dtor(e, &EventQueue::dtor<F>);
+        equeue_event_dtor(e, &EventQueue::dtor<F>);
         return equeue_post(&_equeue, &EventQueue::call<F>, e);
     }
 
@@ -140,8 +140,8 @@ public:
         }
 
         F *e = new (p) F(f);
-        event_delay(e, ms);
-        event_dtor(e, &EventQueue::dtor<F>);
+        equeue_event_delay(e, ms);
+        equeue_event_dtor(e, &EventQueue::dtor<F>);
         return equeue_post(&_equeue, &EventQueue::call<F>, e);
     }
 
@@ -186,9 +186,9 @@ public:
         }
 
         F *e = new (p) F(f);
-        event_delay(e, ms);
-        event_period(e, ms);
-        event_dtor(e, &EventQueue::dtor<F>);
+        equeue_event_delay(e, ms);
+        equeue_event_period(e, ms);
+        equeue_event_dtor(e, &EventQueue::dtor<F>);
         return equeue_post(&_equeue, &EventQueue::call<F>, e);
     }
 

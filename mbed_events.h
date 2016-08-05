@@ -17,7 +17,7 @@
 #define MBED_EVENTS_H
 
 
-#include "events-c/events.h"
+#include "equeue/equeue.h"
 
 
 #ifdef __cplusplus
