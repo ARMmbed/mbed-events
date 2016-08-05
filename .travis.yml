@@ -1,5 +1,5 @@
 script:
-    - cd events-c
+    - cd equeue
 
       # Strict compilation of library
     - CFLAGS='-pedantic -Werror' make
