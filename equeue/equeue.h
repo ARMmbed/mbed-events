@@ -16,15 +16,24 @@ extern "C" {
 #include "equeue_mutex.h"
 #include "equeue_sema.h"
 
+#include <stddef.h>
+#include <stdint.h>
+
 
 // Definition of the minimum size of an event
 // This size fits the events created in the event_call set of functions.
-#define EQUEUE_EVENT_SIZE (sizeof(struct equeue_event) + 3*sizeof(void*))
+#define EQUEUE_EVENT_SIZE (sizeof(struct equeue_event) + 2*sizeof(void*))
 
 // Event/queue structures
 struct equeue_event {
+    unsigned size;
+    uint8_t id;
+    uint8_t generation;
+
     struct equeue_event *next;
-    int id;
+    struct equeue_event *sibling;
+    struct equeue_event **ref;
+
     unsigned target;
     int period;
     void (*dtor)(void *);
@@ -35,32 +44,31 @@ struct equeue_event {
 
 typedef struct equeue {
     struct equeue_event *queue;
-    int next_id;
+    unsigned tick;
+    unsigned breaks;
+    uint8_t generation;
 
-    void *buffer;
-    struct equeue_chunk {
-        unsigned size;
-        struct equeue_chunk *next;
-        struct equeue_chunk *nchunk;
-    } *chunks;
+    unsigned char *buffer;
+    unsigned npw2;
+    void *allocated;
+
+    struct equeue_event *chunks;
     struct equeue_slab {
-        unsigned size;
+        size_t size;
         unsigned char *data;
     } slab;
 
-    struct equeue_event break_;
-
     equeue_sema_t eventsema;
     equeue_mutex_t queuelock;
-    equeue_mutex_t freelock;
+    equeue_mutex_t memlock;
 } equeue_t;
 
 
 // Queue operations
 //
 // Creation results in negative value on failure.
-int equeue_create(equeue_t *queue, unsigned size);
-int equeue_create_inplace(equeue_t *queue, unsigned size, void *buffer);
+int equeue_create(equeue_t *queue, size_t size);
+int equeue_create_inplace(equeue_t *queue, size_t size, void *buffer);
 void equeue_destroy(equeue_t *queue);
 
 // Dispatch events
@@ -98,7 +106,7 @@ int equeue_call_every(equeue_t *queue, int ms, void (*cb)(void *), void *data);
 //
 // equeue_alloc will result in null if no memory is available
 // or the requested size is less than the size passed to equeue_create.
-void *equeue_alloc(equeue_t *queue, unsigned size);
+void *equeue_alloc(equeue_t *queue, size_t size);
 void equeue_dealloc(equeue_t *queue, void *event);
 
 // Configure an allocated event

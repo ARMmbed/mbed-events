@@ -43,17 +43,17 @@ void pass_func(void *eh) {
 }
 
 void simple_func(void *p) {
-    *(bool *)p = true;
+    (*(int *)p)++;
 }
 
 struct indirect {
-    bool *touched;
+    int *touched;
     uint8_t buffer[7];
 };
 
 void indirect_func(void *p) {
     struct indirect *i = (struct indirect*)p;
-    *i->touched = true;
+    (*i->touched)++;
 }
 
 struct timing {
@@ -74,7 +74,7 @@ void timing_func(void *p) {
 
 struct fragment {
     equeue_t *q;
-    unsigned size;
+    size_t size;
     struct timing timing;
 };
 
@@ -90,6 +90,16 @@ void fragment_func(void *p) {
 
     int id = equeue_post(nfragment->q, fragment_func, nfragment);
     test_assert(id);
+}
+
+struct cancel {
+    equeue_t *q;
+    int id;
+};
+
+void cancel_func(void *p) {
+    struct cancel *cancel = (struct cancel *)p;
+    equeue_cancel(cancel->q, cancel->id);
 }
 
 
@@ -113,10 +123,10 @@ void simple_call_in_test(void) {
     test_assert(!err);
 
     bool touched = false;
-    int id = equeue_call_in(&q, 5, simple_func, &touched);
+    int id = equeue_call_in(&q, 10, simple_func, &touched);
     test_assert(id);
 
-    equeue_dispatch(&q, 10);
+    equeue_dispatch(&q, 15);
     test_assert(touched);
 
     equeue_destroy(&q);
@@ -128,10 +138,10 @@ void simple_call_every_test(void) {
     test_assert(!err);
 
     bool touched = false;
-    int id = equeue_call_every(&q, 5, simple_func, &touched);
+    int id = equeue_call_every(&q, 10, simple_func, &touched);
     test_assert(id);
 
-    equeue_dispatch(&q, 10);
+    equeue_dispatch(&q, 15);
     test_assert(touched);
 
     equeue_destroy(&q);
@@ -142,7 +152,7 @@ void simple_post_test(void) {
     int err = equeue_create(&q, 2048);
     test_assert(!err);
 
-    bool touched = false;
+    int touched = false;
     struct indirect *i = equeue_alloc(&q, sizeof(struct indirect));
     test_assert(i);
 
@@ -162,29 +172,55 @@ void destructor_test(void) {
     int err = equeue_create(&q, 2048);
     test_assert(!err);
 
-    bool touched = false;
-    struct indirect *i = equeue_alloc(&q, sizeof(struct indirect));
-    test_assert(i);
+    int touched;
+    struct indirect *e;
+    int ids[3];
 
-    i->touched = &touched;
-    equeue_event_dtor(i, indirect_func);
-    int id = equeue_post(&q, pass_func, i);
-    test_assert(id);
+    touched = 0;
+    for (int i = 0; i < 3; i++) {
+        e = equeue_alloc(&q, sizeof(struct indirect));
+        test_assert(e);
+
+        e->touched = &touched;
+        equeue_event_dtor(e, indirect_func);
+        int id = equeue_post(&q, pass_func, e);
+        test_assert(id);
+    }
 
     equeue_dispatch(&q, 0);
-    test_assert(touched);
+    test_assert(touched == 3);
 
-    touched = false;
-    i = equeue_alloc(&q, sizeof(struct indirect));
-    test_assert(i);
+    touched = 0;
+    for (int i = 0; i < 3; i++) {
+        e = equeue_alloc(&q, sizeof(struct indirect));
+        test_assert(e);
 
-    i->touched = &touched;
-    equeue_event_dtor(i, indirect_func);
-    id = equeue_post(&q, pass_func, i);
-    test_assert(id);
+        e->touched = &touched;
+        equeue_event_dtor(e, indirect_func);
+        ids[i] = equeue_post(&q, pass_func, e);
+        test_assert(ids[i]);
+    }
+
+    for (int i = 0; i < 3; i++) {
+        equeue_cancel(&q, ids[i]);
+    }
+
+    equeue_dispatch(&q, 0);
+    test_assert(touched == 3);
+
+    touched = 0;
+    for (int i = 0; i < 3; i++) {
+        e = equeue_alloc(&q, sizeof(struct indirect));
+        test_assert(e);
+
+        e->touched = &touched;
+        equeue_event_dtor(e, indirect_func);
+        int id = equeue_post(&q, pass_func, e);
+        test_assert(id);
+    }
 
     equeue_destroy(&q);
-    test_assert(touched);
+    test_assert(touched == 3);
 }
 
 void allocation_failure_test(void) {
@@ -227,6 +263,69 @@ void cancel_test(int N) {
     equeue_destroy(&q);
 }
 
+void cancel_inflight_test(void) {
+    equeue_t q;
+    int err = equeue_create(&q, 2048);
+    test_assert(!err);
+
+    bool touched = false;
+
+    int id = equeue_call(&q, simple_func, &touched);
+    equeue_cancel(&q, id);
+
+    equeue_dispatch(&q, 0);
+    test_assert(!touched);
+
+    id = equeue_call(&q, simple_func, &touched);
+    equeue_cancel(&q, id);
+
+    equeue_dispatch(&q, 0);
+    test_assert(!touched);
+
+    struct cancel *cancel = equeue_alloc(&q, sizeof(struct cancel));
+    test_assert(cancel);
+    cancel->q = &q;
+    cancel->id = 0;
+
+    id = equeue_post(&q, cancel_func, cancel);
+    test_assert(id);
+
+    cancel->id = equeue_call(&q, simple_func, &touched);
+
+    equeue_dispatch(&q, 0);
+    test_assert(!touched);
+
+    equeue_destroy(&q);
+}
+
+void cancel_unnecessarily_test(void) {
+    equeue_t q;
+    int err = equeue_create(&q, 2048);
+    test_assert(!err);
+
+    int id = equeue_call(&q, pass_func, 0);
+    for (int i = 0; i < 5; i++) {
+        equeue_cancel(&q, id);
+    }
+
+    id = equeue_call(&q, pass_func, 0);
+    equeue_dispatch(&q, 0);
+    for (int i = 0; i < 5; i++) {
+        equeue_cancel(&q, id);
+    }
+
+    bool touched = false;
+    equeue_call(&q, simple_func, &touched);
+    for (int i = 0; i < 5; i++) {
+        equeue_cancel(&q, id);
+    }
+
+    equeue_dispatch(&q, 0);
+    test_assert(touched);
+
+    equeue_destroy(&q);
+}
+
 void loop_protect_test(void) {
     equeue_t q;
     int err = equeue_create(&q, 2048);
@@ -262,6 +361,20 @@ void break_test(void) {
     equeue_destroy(&q);
 }
 
+void period_test(void) {
+    equeue_t q;
+    int err = equeue_create(&q, 2048);
+    test_assert(!err);
+
+    int count = 0;
+    equeue_call_every(&q, 10, simple_func, &count);
+
+    equeue_dispatch(&q, 55);
+    test_assert(count == 5);
+
+    equeue_destroy(&q);
+}
+
 // Barrage tests
 void simple_barrage_test(int N) {
     equeue_t q;
@@ -293,7 +406,7 @@ void fragmenting_barrage_test(int N) {
     test_assert(!err);
 
     for (int i = 0; i < N; i++) {
-        unsigned size = sizeof(struct fragment) + i*sizeof(int);
+        size_t size = sizeof(struct fragment) + i*sizeof(int);
         struct fragment *fragment = equeue_alloc(&q, size);
         test_assert(fragment);
 
@@ -365,8 +478,11 @@ int main() {
     test_run(destructor_test);
     test_run(allocation_failure_test);
     test_run(cancel_test, 20);
+    test_run(cancel_inflight_test);
+    test_run(cancel_unnecessarily_test);
     test_run(loop_protect_test);
     test_run(break_test);
+    test_run(period_test);
     test_run(simple_barrage_test, 20);
     test_run(fragmenting_barrage_test, 20);
     test_run(multithreaded_barrage_test, 20);
