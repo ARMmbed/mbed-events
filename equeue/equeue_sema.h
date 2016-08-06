@@ -23,9 +23,9 @@ extern "C" {
 typedef sem_t equeue_sema_t;
 #elif defined(__MBED__)
 #ifdef MBED_CONF_RTOS_PRESENT
-typedef void *equeue_sema_t;
+typedef unsigned equeue_sema_t[8];
 #else
-typedef struct {} equeue_sema_t;
+typedef bool equeue_sema_t;
 #endif
 #endif
 

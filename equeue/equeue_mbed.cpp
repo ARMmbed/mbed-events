@@ -13,21 +13,18 @@
 
 #include <stdbool.h>
 #include "mbed.h"
-#ifdef MBED_CONF_RTOS_PRESENT
-#include "rtos.h"
-#endif
 
 
 // Ticker operations
-static class GlobalTicker {
+class EqueueTicker {
 public:
-    GlobalTicker() {
+    EqueueTicker() {
         _tick = 0;
         _timer.start();
-        _ticker.attach_us(this, &GlobalTicker::step, (1 << 16) * 1000);
+        _ticker.attach_us(this, &EqueueTicker::update, (1 << 16) * 1000);
     };
 
-    void step() {
+    void update() {
         _timer.reset();
         _tick += 1 << 16;
     }
@@ -38,12 +35,19 @@ public:
 
 private:
     unsigned _tick;
+#ifdef DEVICE_LOWPOWERTIMER
+    LowPowerTimer _timer;
+    LowPowerTicker _ticker;
+#else
     Timer _timer;
     Ticker _ticker;
-} gticker;
+#endif
+};
+
+static EqueueTicker equeue_ticker;
 
 unsigned equeue_tick() {
-    return gticker.tick();
+    return equeue_ticker.tick();
 }
 
 
@@ -63,42 +67,55 @@ void equeue_mutex_unlock(equeue_mutex_t *m) {
 // Semaphore operations
 #ifdef MBED_CONF_RTOS_PRESENT
 
-static inline Semaphore *sema(equeue_sema_t *s) {
-    return static_cast<Semaphore*>(*s);
-}
-
 int equeue_sema_create(equeue_sema_t *s) {
-    *s = new Semaphore(0);
-    return sema(s) ? 0 : -1;
+    MBED_ASSERT(sizeof(equeue_sema_t) >= sizeof(Semaphore));
+    new (s) Semaphore(0);
+    return 0;
 }
 
 void equeue_sema_destroy(equeue_sema_t *s) {
-    delete sema(s);
+    reinterpret_cast<Semaphore*>(s)->~Semaphore();
 }
 
 void equeue_sema_signal(equeue_sema_t *s) {
-    sema(s)->release();
+    reinterpret_cast<Semaphore*>(s)->release();
 }
 
 bool equeue_sema_wait(equeue_sema_t *s, int ms) {
-    int t = sema(s)->wait(ms < 0 ? osWaitForever : ms);
-    return t > 0;
+    if (ms < 0) {
+        ms = osWaitForever;
+    }
+
+    return (reinterpret_cast<Semaphore*>(s)->wait(ms) > 0);
 }
 
 #else
 
 // Semaphore operations
-int equeue_sema_create(equeue_sema_t *s) { return 0; }
-void equeue_sema_destroy(equeue_sema_t *s) {}
-void equeue_sema_signal(equeue_sema_t *s) {}
+int equeue_sema_create(equeue_sema_t *s) {
+    *s = false;
+    return 0;
+}
 
-static void equeue_sema_wakeup() {}
+void equeue_sema_destroy(equeue_sema_t *s) {
+}
+
+void equeue_sema_signal(equeue_sema_t *s) {
+    *s = true;
+}
 
 bool equeue_sema_wait(equeue_sema_t *s, int ms) {
     Timeout timeout;
-    timeout.attach_us(equeue_sema_wakeup, ms*1000);
+    timeout.attach_us(s, equeue_sema_signal, ms*1000);
 
-    __WFI();
+    core_util_critical_section_enter();
+    while (!*(volatile equeue_sema_t *)s) {
+        __WFI();
+        core_util_critical_section_exit();
+        core_util_critical_section_enter();
+    }
+    *s = false;
+    core_util_critical_section_exit();
 
     return true;
 }
