@@ -32,3 +32,20 @@ void EventQueue::cancel(int id) {
     return equeue_cancel(&_equeue, id);
 }
 
+void EventQueue::background(Callback<void(int)> update) {
+    _update = update;
+
+    if (_update) {
+        equeue_background(&_equeue, &Callback<void(int)>::thunk, &_update);
+    } else {
+        equeue_background(&_equeue, 0, 0);
+    }
+}
+
+void EventQueue::chain(EventQueue *target) {
+    if (target) {
+        equeue_chain(&_equeue, &target->_equeue);
+    } else {
+        equeue_chain(&_equeue, 0);
+    }
+}
