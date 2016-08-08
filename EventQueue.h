@@ -80,6 +80,29 @@ public:
      */
     void cancel(int id);
 
+    /** Background an event queue onto a single-shot timer
+     *
+     *  The provided update function will be called to indicate when the queue
+     *  should be dispatched. A negative timeout will be passed to the update
+     *  function when the timer is no longer needed. A null update function
+     *  will disable the existing timer.
+     *
+     *  @param update   Function called to indicate when the queue should be
+     *                  dispatched
+     */
+    void background(mbed::Callback<void(int)> update);
+
+    /** Chain an event queue onto another event queue
+     *
+     *  After chaining a queue to a target, calling dispatch on the target
+     *  queue will also dispatch events from this queue. The queues will use
+     *  their own buffers and events are handled independently. A null queue
+     *  as the target will unchain the queue.
+     *
+     *  @param target   Queue to chain onto
+     */
+    void chain(EventQueue *target);
+
     /** Post an event to the queue
      *
      *  @param f        Function to call on event dispatch
@@ -221,6 +244,7 @@ protected:
     void break_();
 
     struct equeue _equeue;
+    mbed::Callback<void(int)> _update;
 
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
     struct Context5 {
