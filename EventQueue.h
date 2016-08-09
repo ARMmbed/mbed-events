@@ -31,10 +31,10 @@ namespace events {
 #define EVENTS_EVENT_SIZE \
     (EQUEUE_EVENT_SIZE - 2*sizeof(void*) + sizeof(mbed::Callback<void()>))
 
-/** DEFAULT_QUEUE_SIZE
- *  default size of buffer for events
+/** EVENTS_QUEUE_SIZE
+ *  Default size of buffer for events
  */
-#define DEFAULT_QUEUE_SIZE (32*EVENTS_EVENT_SIZE)
+#define EVENTS_QUEUE_SIZE (32*EVENTS_EVENT_SIZE)
 
 
 /** EventQueue
@@ -46,11 +46,11 @@ public:
     /** Create an event queue
      *
      *  @param queue_size       Size of buffer to use for events
-     *                          (default: DEFAULT_QUEUE_SIZE)
+     *                          (default: EVENTS_QUEUE_SIZE)
      *  @param queue_pointer    Pointer to memory region to use for events
      *                          (default: NULL)
      */
-    EventQueue(unsigned queue_size=DEFAULT_QUEUE_SIZE,
+    EventQueue(unsigned queue_size=EVENTS_QUEUE_SIZE,
                unsigned char *queue_pointer=NULL);
 
     /** Destroy an event queue
@@ -63,13 +63,21 @@ public:
      *              value will dispatch events forever
      *              (default: -1)
      */
-    void dispatch(int ms=-1);
+    void dispatch(int ms);
+    void dispatch() { dispatch(-1); }
+
+    /** Break out of a running event loop
+     *
+     *  Forces the specified event queue's dispatch loop to terminate. Pending
+     *  events may finish executing, but no new events will be executed.
+     */
+    void break_dispatch();
 
     /*  Monotonic counter for the event queue
      *  @return     A monotonically incrementing counter in milliseconds
      *              this count intentionally overflows to 0 after 2^32-1
      */
-    unsigned get_tick();
+    unsigned tick();
 
     /** Cancel events that are in flight
      *
@@ -241,8 +249,6 @@ public:
     }
 
 protected:
-    void break_();
-
     struct equeue _equeue;
     mbed::Callback<void(int)> _update;
 
