@@ -102,40 +102,6 @@ void call_every_test() {
     queue.dispatch(N*100);
 }
 
-#ifdef MBED_CONF_RTOS_PRESENT
-void event_loop_test1() {
-    EventLoop loop;
-    osStatus status = loop.start();
-    TEST_ASSERT_EQUAL(osOK, status);
-
-    touched = false;
-    loop.call(func0);
-    Thread::yield();
-    TEST_ASSERT(touched);
-
-    status = loop.stop();
-    TEST_ASSERT_EQUAL(osOK, status);
-}
-
-template <int N>
-void event_loop_test2() {
-    EventLoop loop(osPriorityHigh);
-    osStatus status = loop.start();
-    TEST_ASSERT_EQUAL(osOK, status);
-
-    Timer tickers[N];
-
-    for (int i = 0; i < N; i++) {
-        tickers[i].start();
-        loop.call_every((i+1)*100, time_func, &tickers[i], (i+1)*100);
-        Thread::yield();
-        wait_ms(75);
-    }
-
-    wait_ms(N*100);
-}
-#endif
-
 struct big { char data[4096]; } big;
 
 void allocate_failure_test1() {
@@ -176,28 +142,6 @@ void cancel_test1() {
     queue.dispatch(0);
 }
 
-#ifdef MBED_CONF_RTOS_PRESENT
-template <int N>
-void cancel_test2() {
-    EventLoop loop;
-    osStatus status = loop.start();
-    TEST_ASSERT_EQUAL(osOK, status);
-
-    int ids[N];
-
-    for (int i = 0; i < N; i++) {
-        ids[i] = loop.call_in(1000, no);
-    }
-
-    for (int i = N-1; i >= 0; i--) {
-        loop.cancel(ids[i]);
-    }
-
-    status = loop.stop();
-    TEST_ASSERT_EQUAL(osOK, status);
-}
-#endif
-
 
 // Test setup
 utest::v1::status_t test_setup(const size_t number_of_cases) {
@@ -216,18 +160,10 @@ const Case cases[] = {
     Case("Testing call_in",    call_in_test<20>),
     Case("Testing call_every", call_every_test<20>),
 
-#ifdef MBED_CONF_RTOS_PRESENT
-    Case("Testing event loop 1", event_loop_test1),
-    Case("Testing event loop 2", event_loop_test2<20>),
-#endif
-
     Case("Testing allocate failure 1", allocate_failure_test1),
     Case("Testing allocate failure 2", allocate_failure_test2),
 
     Case("Testing event cancel 1", cancel_test1<20>),
-#ifdef MBED_CONF_RTOS_PRESENT
-    Case("Testing event cancel 2", cancel_test2<20>),
-#endif
 };
 
 Specification specification(test_setup, cases);

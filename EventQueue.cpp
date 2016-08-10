@@ -20,11 +20,11 @@ void EventQueue::dispatch(int ms) {
     return equeue_dispatch(&_equeue, ms);
 }
 
-void EventQueue::break_() {
+void EventQueue::break_dispatch() {
     return equeue_break(&_equeue);
 }
 
-unsigned EventQueue::get_tick() {
+unsigned EventQueue::tick() {
     return equeue_tick();
 }
 
