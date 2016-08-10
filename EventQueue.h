@@ -39,29 +39,37 @@ namespace events {
 
 /** EventQueue
  *
- *  Flexible event queue
+ *  Flexible event queue for dispatching events
  */
 class EventQueue {
 public:
-    /** Create an event queue
+    /** EventQueue lifetime
      *
-     *  @param queue_size       Size of buffer to use for events
-     *                          (default: EVENTS_QUEUE_SIZE)
-     *  @param queue_pointer    Pointer to memory region to use for events
-     *                          (default: NULL)
+     *  Create and destroy event queues. The event queue either allocates
+     *  a buffer of the specified size with malloc or uses the user provided
+     *  buffer.
+     *
+     *  @param size     Size of buffer to use for events in bytes
+     *                  (default to EVENTS_QUEUE_SIZE)
+     *  @param buffer   Pointer to buffer to use for events
+     *                  (default to NULL)
      */
-    EventQueue(unsigned queue_size=EVENTS_QUEUE_SIZE,
-               unsigned char *queue_pointer=NULL);
-
-    /** Destroy an event queue
-     */
+    EventQueue(unsigned size=EVENTS_QUEUE_SIZE, unsigned char *buffer=NULL);
     ~EventQueue();
 
-    /** Dispatch pending events
-     *  @param ms   Time to wait for events in milliseconds, 0 will return
-     *              immediately if no events are pending, a negative
-     *              value will dispatch events forever
-     *              (default: -1)
+    /** Dispatch events
+     *
+     *  Executes events until the specified milliseconds have passed.
+     *  If ms is negative, the dispatch function will dispatch events
+     *  indefinitely or until break_dispatch is called on this queue.
+     *
+     *  When called with a finite timeout, the dispatch function is garunteed
+     *  to terminate. When called with a timeout of 0, the dispatch function
+     *  does not wait and is irq safe.
+     *
+     *  @param ms       Time to wait for events in milliseconds, a negative
+     *                  value will dispatch events indefinitely
+     *                  (default to -1)
      */
     void dispatch(int ms);
     void dispatch() { dispatch(-1); }
@@ -73,18 +81,29 @@ public:
      */
     void break_dispatch();
 
-    /*  Monotonic counter for the event queue
-     *  @return     A monotonically incrementing counter in milliseconds
-     *              this count intentionally overflows to 0 after 2^32-1
+    /** Millisecond counter
+     *
+     *  Returns the underlying tick of the event queue represented as the 
+     *  number of milliseconds that have passed since an arbitrary point in
+     *  time. Intentionally overflows to 0 after 2^32-1.
+     *
+     *  @return         The underlying tick of the event queue in milliseconds
      */
     unsigned tick();
 
-    /** Cancel events that are in flight
+    /** Cancel an in-flight event
      *
-     *  If event has already been dispatched or does not exist, no error occurs.
+     *  Attempts to cancel an event referenced by the unique id returned from
+     *  one of the call functions. It is safe to call cancel after an event
+     *  has already been dispatched.
      *
-     *  @param id   Event id to cancel
-     *  @note This can not stop a currently executing event
+     *  The cancel function is irq safe.
+     *
+     *  If called while the event queue's dispatch loop is active, the cancel
+     *  function does not garuntee that the event will not execute after it
+     *  returns, as the event may have already begun executing.
+     *
+     *  @param id       Unique id of the event
      */
     void cancel(int id);
 
@@ -92,8 +111,13 @@ public:
      *
      *  The provided update function will be called to indicate when the queue
      *  should be dispatched. A negative timeout will be passed to the update
-     *  function when the timer is no longer needed. A null update function
-     *  will disable the existing timer.
+     *  function when the time is no longer needed.
+     *
+     *  Passing a null update function disables the existing timre.
+     *
+     *  The background function allows an event queue to take advantage of
+     *  hardware timers or even other event loops, allowing an event queue to
+     *  be effectively backgrounded.
      *
      *  @param update   Function called to indicate when the queue should be
      *                  dispatched
@@ -103,20 +127,33 @@ public:
     /** Chain an event queue onto another event queue
      *
      *  After chaining a queue to a target, calling dispatch on the target
-     *  queue will also dispatch events from this queue. The queues will use
-     *  their own buffers and events are handled independently. A null queue
-     *  as the target will unchain the queue.
+     *  queue will also dispatch events from this queue. The queues use
+     *  their own buffers and events must be handled independently.
      *
-     *  @param target   Queue to chain onto
+     *  A null queue as the target will unchain the existing queue.
+     *
+     *  The chain function allows multiple event queuest to be composed,
+     *  sharing the context of a dispatch loop while still being managed
+     *  independently
+     *
+     *  @param target   Queue that will dispatch this queue's events as a
+     *                  part of its dispatch loop
      */
     void chain(EventQueue *target);
 
     /** Post an event to the queue
      *
-     *  @param f        Function to call on event dispatch
+     *  The specified callback will be executed in the context of the event
+     *  queue's dispatch loop.
+     *
+     *  The call function is irq safe and can act as a mechanism for moving
+     *  events out of irq contexts.
+     *
+     *  @param f        Function to execute in the context of the dispatch loop
      *  @param a0..a4   Arguments to pass to the callback
-     *  @return         A positive id representing the event in the queue,
-     *                  or 0 on failure
+     *  @return         A unique id that represents the posted event and can
+     *                  be passed to cancel, or an id of 0 if there is not
+     *                  enough memory to allocate the event.
      */
     template <typename F>
     int call(F f) {
@@ -157,11 +194,18 @@ public:
 
     /** Post an event to the queue after a specified delay
      *
-     *  @param f        Function to call on event dispatch
+     *  The specified callback will be executed in the context of the event
+     *  queue's dispatch loop.
+     *
+     *  The call_in function is irq safe and can act as a mechanism for moving
+     *  events out of irq contexts.
+     *
+     *  @param f        Function to execute in the context of the dispatch loop
      *  @param a0..a4   Arguments to pass to the callback
      *  @param ms       Time to delay in milliseconds
-     *  @return         A positive id representing the event in the queue,
-     *                  or 0 on failure
+     *  @return         A unique id that represents the posted event and can
+     *                  be passed to cancel, or an id of 0 if there is not
+     *                  enough memory to allocate the event.
      */
     template <typename F>
     int call_in(int ms, F f) {
@@ -203,11 +247,18 @@ public:
 
     /** Post an event to the queue periodically
      *
-     *  @param f        Function to call on event dispatch
+     *  The specified callback will be executed in the context of the event
+     *  queue's dispatch loop.
+     *
+     *  The call_every function is irq safe and can act as a mechanism for
+     *  moving events out of irq contexts.
+     *
+     *  @param f        Function to execute in the context of the dispatch loop
      *  @param a0..a4   Arguments to pass to the callback
      *  @param ms       Period of the event in milliseconds
-     *  @return         A positive id representing the event in the queue,
-     *                  or 0 on failure
+     *  @return         A unique id that represents the posted event and can
+     *                  be passed to cancel, or an id of 0 if there is not
+     *                  enough memory to allocate the event.
      */
     template <typename F>
     int call_every(int ms, F f) {
