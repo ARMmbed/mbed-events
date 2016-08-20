@@ -5,49 +5,48 @@
  * Copyright (c) 2016 Christopher Haster
  * Distributed under the MIT license
  */
-#if defined(__MBED__)
+#include "equeue_platform.h"
 
-#include "equeue_tick.h"
-#include "equeue_sema.h"
-#include "equeue_mutex.h"
+#if defined(EQUEUE_PLATFORM_MBED)
 
 #include <stdbool.h>
 #include "mbed.h"
 
 
 // Ticker operations
-class EqueueTicker {
-public:
-    EqueueTicker() {
-        _tick = 0;
-        _timer.start();
-        _ticker.attach_us(this, &EqueueTicker::update, (1 << 16) * 1000);
-    };
+static bool equeue_tick_inited = false;
+static unsigned equeue_minutes = 0;
+static unsigned equeue_timer[
+        (sizeof(Timer)+sizeof(unsigned)-1)/sizeof(unsigned)];
+static unsigned equeue_ticker[
+        (sizeof(Ticker)+sizeof(unsigned)-1)/sizeof(unsigned)];
 
-    void update() {
-        _timer.reset();
-        _tick += 1 << 16;
-    }
+static void equeue_tick_update() {
+    reinterpret_cast<Timer*>(equeue_timer)->reset();
+    equeue_minutes += 1;
+}
 
-    unsigned tick() {
-        return _tick + (unsigned)_timer.read_ms();
-    }
+static void equeue_tick_init() {
+    MBED_ASSERT(sizeof(equeue_timer) >= sizeof(Timer));
+    MBED_ASSERT(sizeof(equeue_ticker) >= sizeof(Ticker));
+    new (equeue_timer) Timer;
+    new (equeue_ticker) Ticker;
 
-private:
-    unsigned _tick;
-#ifdef DEVICE_LOWPOWERTIMER
-    LowPowerTimer _timer;
-    LowPowerTicker _ticker;
-#else
-    Timer _timer;
-    Ticker _ticker;
-#endif
-};
+    equeue_minutes = 0;
+    reinterpret_cast<Timer*>(equeue_timer)->start();
+    reinterpret_cast<Ticker*>(equeue_ticker)
+            ->attach_us(equeue_tick_update, (1 << 16)*1000);
 
-static EqueueTicker equeue_ticker;
+    equeue_tick_inited = true;
+}
 
 unsigned equeue_tick() {
-    return equeue_ticker.tick();
+    if (!equeue_tick_inited) {
+        equeue_tick_init();
+    }
+
+    unsigned equeue_ms = reinterpret_cast<Timer*>(equeue_timer)->read_ms();
+    return (equeue_minutes << 16) + equeue_ms;
 }
 
 
@@ -101,23 +100,30 @@ void equeue_sema_destroy(equeue_sema_t *s) {
 }
 
 void equeue_sema_signal(equeue_sema_t *s) {
-    *s = true;
+    *s = 1;
+}
+
+static void equeue_sema_timeout(equeue_sema_t *s) {
+    *s = -1;
 }
 
 bool equeue_sema_wait(equeue_sema_t *s, int ms) {
+    int signal = 0;
     Timeout timeout;
-    timeout.attach_us(s, equeue_sema_signal, ms*1000);
+    timeout.attach_us(s, equeue_sema_timeout, ms*1000);
 
     core_util_critical_section_enter();
-    while (!*(volatile equeue_sema_t *)s) {
-        __WFI();
+    while (!*s) {
+        sleep();
         core_util_critical_section_exit();
         core_util_critical_section_enter();
     }
+
+    signal = *s;
     *s = false;
     core_util_critical_section_exit();
 
-    return true;
+    return (signal > 0);
 }
 
 #endif
