@@ -143,6 +143,36 @@ void cancel_test1() {
 }
 
 
+// Testing the dynamic arguments to the event class
+unsigned counter = 0;
+
+void count5(unsigned a0, unsigned a1, unsigned a2, unsigned a3, unsigned a5) {
+    counter += a0 + a1 + a2 + a3 + a5;
+}
+
+void event_class_test() {
+    EventQueue queue(2048);
+
+    Event<int, int, int, int, int> e5(&queue, count5);
+    Event<int, int, int, int> e4(&queue, count5, 1);
+    Event<int, int, int> e3(&queue, count5, 1, 1);
+    Event<int, int> e2(&queue, count5, 1, 1, 1);
+    Event<int> e1(&queue, count5, 1, 1, 1, 1);
+    Event<> e0(&queue, count5, 1, 1, 1, 1, 1);
+
+    e5.post(1, 1, 1, 1, 1);
+    e4.post(1, 1, 1, 1);
+    e3.post(1, 1, 1);
+    e2.post(1, 1);
+    e1.post(1);
+    e0.post();
+
+    queue.dispatch(0);
+
+    TEST_ASSERT_EQUAL(counter, 30);
+}
+
+
 // Test setup
 utest::v1::status_t test_setup(const size_t number_of_cases) {
     GREENTEA_SETUP(20, "default_auto");
@@ -164,6 +194,7 @@ const Case cases[] = {
     Case("Testing allocate failure 2", allocate_failure_test2),
 
     Case("Testing event cancel 1", cancel_test1<20>),
+    Case("Testing the event class", event_class_test),
 };
 
 Specification specification(test_setup, cases);

@@ -92,8 +92,40 @@ if (id) {
 queue.cancel(id);
 ```
 
-Event queuest easily align with module boundaries, where internal state can
-be implicitely synchronized through event dispatch. Multiple modules can
+For a more fine-grain control of event dispatch, the `Event` class can be
+manually instantiated and configured. An `Event` represents an event as
+a C++ style function object and can be directly passed to other APIs that
+expect a callback.
+
+``` cpp
+// Creates an event bound to the specified event queue
+EventQueue queue;
+Event<> event(&queue, doit);
+
+// The event can be manually configured for special timing requirements
+// specified in milliseconds
+event.delay(10);
+event.period(10000);
+
+// Posted events are dispatched in the context of the queue's
+// dispatch function
+queue.dispatch();
+
+// Events can also pass arguments to the underlying callback when both
+// initially constructed and posted.
+Event<int, int> event(&queue, printf, "recieved %d and %d\n");
+
+// Events can be posted multiple times and enqueue gracefully until
+// the dispatch function is called.
+event.post(1, 2);
+event.post(3, 4);
+event.post(5, 6);
+
+queue.dispatch();
+```
+
+Event queues easily align with module boundaries, where internal state can
+be implicitly synchronized through event dispatch. Multiple modules can
 use independent event queues, but still be composed through the
 `EventQueue::chain` function.
 
@@ -117,4 +149,5 @@ b.chain(&a);
 // all three queues
 a.dispatch();
 ```
+
 
