@@ -150,7 +150,28 @@ void count5(unsigned a0, unsigned a1, unsigned a2, unsigned a3, unsigned a5) {
     counter += a0 + a1 + a2 + a3 + a5;
 }
 
+void count4(unsigned a0, unsigned a1, unsigned a2, unsigned a3) {
+    counter += a0 + a1 + a2 + a3;
+}
+
+void count3(unsigned a0, unsigned a1, unsigned a2) {
+    counter += a0 + a1 + a2;
+}
+
+void count2(unsigned a0, unsigned a1) {
+    counter += a0 + a1;
+}
+
+void count1(unsigned a0) {
+    counter += a0;
+}
+
+void count0() {
+    counter += 0;
+}
+
 void event_class_test() {
+    counter = 0;
     EventQueue queue(2048);
 
     Event<int, int, int, int, int> e5(&queue, count5);
@@ -170,6 +191,29 @@ void event_class_test() {
     queue.dispatch(0);
 
     TEST_ASSERT_EQUAL(counter, 30);
+}
+
+void event_class_helper_test() {
+    counter = 0;
+    EventQueue queue(2048);
+
+    Event<> e5 = queue.event(count5, 1, 1, 1, 1, 1);
+    Event<> e4 = queue.event(count4, 1, 1, 1, 1);
+    Event<> e3 = queue.event(count3, 1, 1, 1);
+    Event<> e2 = queue.event(count2, 1, 1);
+    Event<> e1 = queue.event(count1, 1);
+    Event<> e0 = queue.event(count0);
+
+    e5.post();
+    e4.post();
+    e3.post();
+    e2.post();
+    e1.post();
+    e0.post();
+
+    queue.dispatch(0);
+
+    TEST_ASSERT_EQUAL(counter, 15);
 }
 
 
@@ -195,6 +239,7 @@ const Case cases[] = {
 
     Case("Testing event cancel 1", cancel_test1<20>),
     Case("Testing the event class", event_class_test),
+    Case("Testing the event class helpers", event_class_helper_test),
 };
 
 Specification specification(test_setup, cases);

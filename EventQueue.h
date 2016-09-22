@@ -36,6 +36,10 @@ namespace events {
  */
 #define EVENTS_QUEUE_SIZE (32*EVENTS_EVENT_SIZE)
 
+// Predeclared classes
+template <typename A0, typename A1, typename A2, typename A3, typename A4>
+class Event;
+
 
 /** EventQueue
  *
@@ -313,6 +317,40 @@ public:
     int call_every(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
         return call_every(ms, context50<F, A0, A1, A2, A3, A4>(f, a0, a1, a2, a3, a4));
     }
+
+    /** Event creation
+     *
+     *  Constructs an event bound to the specified event queue. The specified
+     *  callback acts as the target for the event and is executed in the
+     *  context of the event queue's dispatch loop once posted.
+     *
+     *  @param f        Function to execute when the event is dispatched
+     *  @param a0..a4   Arguments to pass to the callback
+     *  @return         Event that will dispatch on the specific queue
+     */
+    template <typename F>
+    Event<void, void, void, void, void>
+    event(F f);
+
+    template <typename F, typename A0>
+    Event<void, void, void, void, void>
+    event(F f, A0 a0);
+
+    template <typename F, typename A0, typename A1>
+    Event<void, void, void, void, void>
+    event(F f, A0 a0, A1 a1);
+
+    template <typename F, typename A0, typename A1, typename A2>
+    Event<void, void, void, void, void>
+    event(F f, A0 a0, A1 a1, A2 a2);
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3>
+    Event<void, void, void, void, void>
+    event(F f, A0 a0, A1 a1, A2 a2, A3 a3);
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void, void, void, void, void>
+    event(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4);
 
 protected:
     template <typename A0, typename A1, typename A2, typename A3, typename A4>
@@ -717,6 +755,15 @@ protected:
     };
 };
 
+}
+
+
+// Include event class here to workaround cyclic dependencies
+// between Event and EventQueue
+//#include "Event.h"
+
+
+namespace events {
 
 }
 
