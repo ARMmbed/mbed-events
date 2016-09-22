@@ -25,7 +25,7 @@ namespace events {
  *
  *  Representation of an event for fine-grain dispatch control
  */
-template <typename A0=void, typename A1=void, typename A2=void, typename A3=void, typename A4=void>
+template <typename F>
 class Event;
 
 /** Event
@@ -33,7 +33,7 @@ class Event;
  *  Representation of an event for fine-grain dispatch control
  */
 template <>
-class Event<> {
+class Event<void()> {
 public:
     /** Event lifetime
      *
@@ -226,7 +226,7 @@ private:
  *  Representation of an event for fine-grain dispatch control
  */
 template <typename A0>
-class Event<A0> {
+class Event<void(A0)> {
 public:
     /** Event lifetime
      *
@@ -234,6 +234,7 @@ public:
      *  callback acts as the target for the event and is executed in the
      *  context of the event queue's dispatch loop once posted.
      *
+     *  @param q        Event queue to dispatch on
      *  @param f        Function to execute when the event is dispatched
      *  @param a0..a4   Arguments to pass to the callback
      */
@@ -418,7 +419,7 @@ private:
  *  Representation of an event for fine-grain dispatch control
  */
 template <typename A0, typename A1>
-class Event<A0, A1> {
+class Event<void(A0, A1)> {
 public:
     /** Event lifetime
      *
@@ -426,6 +427,7 @@ public:
      *  callback acts as the target for the event and is executed in the
      *  context of the event queue's dispatch loop once posted.
      *
+     *  @param q        Event queue to dispatch on
      *  @param f        Function to execute when the event is dispatched
      *  @param a0..a4   Arguments to pass to the callback
      */
@@ -610,7 +612,7 @@ private:
  *  Representation of an event for fine-grain dispatch control
  */
 template <typename A0, typename A1, typename A2>
-class Event<A0, A1, A2> {
+class Event<void(A0, A1, A2)> {
 public:
     /** Event lifetime
      *
@@ -618,6 +620,7 @@ public:
      *  callback acts as the target for the event and is executed in the
      *  context of the event queue's dispatch loop once posted.
      *
+     *  @param q        Event queue to dispatch on
      *  @param f        Function to execute when the event is dispatched
      *  @param a0..a4   Arguments to pass to the callback
      */
@@ -802,7 +805,7 @@ private:
  *  Representation of an event for fine-grain dispatch control
  */
 template <typename A0, typename A1, typename A2, typename A3>
-class Event<A0, A1, A2, A3> {
+class Event<void(A0, A1, A2, A3)> {
 public:
     /** Event lifetime
      *
@@ -810,6 +813,7 @@ public:
      *  callback acts as the target for the event and is executed in the
      *  context of the event queue's dispatch loop once posted.
      *
+     *  @param q        Event queue to dispatch on
      *  @param f        Function to execute when the event is dispatched
      *  @param a0..a4   Arguments to pass to the callback
      */
@@ -994,7 +998,7 @@ private:
  *  Representation of an event for fine-grain dispatch control
  */
 template <typename A0, typename A1, typename A2, typename A3, typename A4>
-class Event {
+class Event<void(A0, A1, A2, A3, A4)> {
 public:
     /** Event lifetime
      *
@@ -1002,6 +1006,7 @@ public:
      *  callback acts as the target for the event and is executed in the
      *  context of the event queue's dispatch loop once posted.
      *
+     *  @param q        Event queue to dispatch on
      *  @param f        Function to execute when the event is dispatched
      *  @param a0..a4   Arguments to pass to the callback
      */
@@ -1183,33 +1188,33 @@ private:
 
 
 template <typename F>
-Event<> EventQueue::event(F f) {
-    return Event<>(this, f);
+Event<void()> EventQueue::event(F f) {
+    return Event<void()>(this, f);
 }
 
 template <typename F, typename A0>
-Event<> EventQueue::event(F f, A0 a0) {
-    return Event<>(this, f, a0);
+Event<void()> EventQueue::event(F f, A0 a0) {
+    return Event<void()>(this, f, a0);
 }
 
 template <typename F, typename A0, typename A1>
-Event<> EventQueue::event(F f, A0 a0, A1 a1) {
-    return Event<>(this, f, a0, a1);
+Event<void()> EventQueue::event(F f, A0 a0, A1 a1) {
+    return Event<void()>(this, f, a0, a1);
 }
 
 template <typename F, typename A0, typename A1, typename A2>
-Event<> EventQueue::event(F f, A0 a0, A1 a1, A2 a2) {
-    return Event<>(this, f, a0, a1, a2);
+Event<void()> EventQueue::event(F f, A0 a0, A1 a1, A2 a2) {
+    return Event<void()>(this, f, a0, a1, a2);
 }
 
 template <typename F, typename A0, typename A1, typename A2, typename A3>
-Event<> EventQueue::event(F f, A0 a0, A1 a1, A2 a2, A3 a3) {
-    return Event<>(this, f, a0, a1, a2, a3);
+Event<void()> EventQueue::event(F f, A0 a0, A1 a1, A2 a2, A3 a3) {
+    return Event<void()>(this, f, a0, a1, a2, a3);
 }
 
 template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
-Event<> EventQueue::event(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-    return Event<>(this, f, a0, a1, a2, a3, a4);
+Event<void()> EventQueue::event(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    return Event<void()>(this, f, a0, a1, a2, a3, a4);
 }
 
 }

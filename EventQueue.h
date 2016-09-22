@@ -37,7 +37,7 @@ namespace events {
 #define EVENTS_QUEUE_SIZE (32*EVENTS_EVENT_SIZE)
 
 // Predeclared classes
-template <typename A0, typename A1, typename A2, typename A3, typename A4>
+template <typename F>
 class Event;
 
 
@@ -329,31 +329,25 @@ public:
      *  @return         Event that will dispatch on the specific queue
      */
     template <typename F>
-    Event<void, void, void, void, void>
-    event(F f);
+    Event<void()> event(F f);
 
     template <typename F, typename A0>
-    Event<void, void, void, void, void>
-    event(F f, A0 a0);
+    Event<void()> event(F f, A0 a0);
 
     template <typename F, typename A0, typename A1>
-    Event<void, void, void, void, void>
-    event(F f, A0 a0, A1 a1);
+    Event<void()> event(F f, A0 a0, A1 a1);
 
     template <typename F, typename A0, typename A1, typename A2>
-    Event<void, void, void, void, void>
-    event(F f, A0 a0, A1 a1, A2 a2);
+    Event<void()> event(F f, A0 a0, A1 a1, A2 a2);
 
     template <typename F, typename A0, typename A1, typename A2, typename A3>
-    Event<void, void, void, void, void>
-    event(F f, A0 a0, A1 a1, A2 a2, A3 a3);
+    Event<void()> event(F f, A0 a0, A1 a1, A2 a2, A3 a3);
 
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
-    Event<void, void, void, void, void>
-    event(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4);
+    Event<void()> event(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4);
 
 protected:
-    template <typename A0, typename A1, typename A2, typename A3, typename A4>
+    template <typename F>
     friend class Event;
     struct equeue _equeue;
     mbed::Callback<void(int)> _update;

@@ -100,7 +100,7 @@ expect a callback.
 ``` cpp
 // Creates an event bound to the specified event queue
 EventQueue queue;
-Event<> event(&queue, doit);
+Event<void()> event(&queue, doit);
 
 // The event can be manually configured for special timing requirements
 // specified in milliseconds
@@ -113,7 +113,7 @@ queue.dispatch();
 
 // Events can also pass arguments to the underlying callback when both
 // initially constructed and posted.
-Event<int, int> event(&queue, printf, "recieved %d and %d\n");
+Event<void(int, int)> event(&queue, printf, "recieved %d and %d\n");
 
 // Events can be posted multiple times and enqueue gracefully until
 // the dispatch function is called.

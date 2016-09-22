@@ -174,12 +174,12 @@ void event_class_test() {
     counter = 0;
     EventQueue queue(2048);
 
-    Event<int, int, int, int, int> e5(&queue, count5);
-    Event<int, int, int, int> e4(&queue, count5, 1);
-    Event<int, int, int> e3(&queue, count5, 1, 1);
-    Event<int, int> e2(&queue, count5, 1, 1, 1);
-    Event<int> e1(&queue, count5, 1, 1, 1, 1);
-    Event<> e0(&queue, count5, 1, 1, 1, 1, 1);
+    Event<void(int, int, int, int, int)> e5(&queue, count5);
+    Event<void(int, int, int, int)> e4(&queue, count5, 1);
+    Event<void(int, int, int)> e3(&queue, count5, 1, 1);
+    Event<void(int, int)> e2(&queue, count5, 1, 1, 1);
+    Event<void(int)> e1(&queue, count5, 1, 1, 1, 1);
+    Event<void()> e0(&queue, count5, 1, 1, 1, 1, 1);
 
     e5.post(1, 1, 1, 1, 1);
     e4.post(1, 1, 1, 1);
@@ -197,12 +197,12 @@ void event_class_helper_test() {
     counter = 0;
     EventQueue queue(2048);
 
-    Event<> e5 = queue.event(count5, 1, 1, 1, 1, 1);
-    Event<> e4 = queue.event(count4, 1, 1, 1, 1);
-    Event<> e3 = queue.event(count3, 1, 1, 1);
-    Event<> e2 = queue.event(count2, 1, 1);
-    Event<> e1 = queue.event(count1, 1);
-    Event<> e0 = queue.event(count0);
+    Event<void()> e5 = queue.event(count5, 1, 1, 1, 1, 1);
+    Event<void()> e4 = queue.event(count4, 1, 1, 1, 1);
+    Event<void()> e3 = queue.event(count3, 1, 1, 1);
+    Event<void()> e2 = queue.event(count2, 1, 1);
+    Event<void()> e1 = queue.event(count1, 1);
+    Event<void()> e0 = queue.event(count0);
 
     e5.post();
     e4.post();
