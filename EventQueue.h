@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 #ifndef EVENT_QUEUE_H
 #define EVENT_QUEUE_H
 
@@ -22,7 +23,6 @@
 #include <new>
 
 namespace events {
-
 
 /** EVENTS_EVENT_SIZE
  *  Minimum size of an event
@@ -35,6 +35,10 @@ namespace events {
  *  Default size of buffer for events
  */
 #define EVENTS_QUEUE_SIZE (32*EVENTS_EVENT_SIZE)
+
+// Predeclared classes
+template <typename F>
+class Event;
 
 
 /** EventQueue
@@ -157,39 +161,44 @@ public:
      */
     template <typename F>
     int call(F f) {
+        struct local {
+            static void call(void *p) { (*static_cast<F*>(p))(); }
+            static void dtor(void *p) { static_cast<F*>(p)->~F(); }
+        };
+
         void *p = equeue_alloc(&_equeue, sizeof(F));
         if (!p) {
             return 0;
         }
 
         F *e = new (p) F(f);
-        equeue_event_dtor(e, &EventQueue::dtor<F>);
-        return equeue_post(&_equeue, &EventQueue::call<F>, e);
+        equeue_event_dtor(e, &local::dtor);
+        return equeue_post(&_equeue, &local::call, e);
     }
 
     template <typename F, typename A0>
     int call(F f, A0 a0) {
-        return call(Context1<F,A0>(f,a0));
+        return call(context10<F, A0>(f, a0));
     }
 
     template <typename F, typename A0, typename A1>
     int call(F f, A0 a0, A1 a1) {
-        return call(Context2<F,A0,A1>(f,a0,a1));
+        return call(context20<F, A0, A1>(f, a0, a1));
     }
 
     template <typename F, typename A0, typename A1, typename A2>
     int call(F f, A0 a0, A1 a1, A2 a2) {
-        return call(Context3<F,A0,A1,A2>(f,a0,a1,a2));
+        return call(context30<F, A0, A1, A2>(f, a0, a1, a2));
     }
 
     template <typename F, typename A0, typename A1, typename A2, typename A3>
     int call(F f, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call(Context4<F,A0,A1,A2,A3>(f,a0,a1,a2,a3));
+        return call(context40<F, A0, A1, A2, A3>(f, a0, a1, a2, a3));
     }
 
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call(Context5<F,A0,A1,A2,A3,A4>(f,a0,a1,a2,a3,a4));
+        return call(context50<F, A0, A1, A2, A3, A4>(f, a0, a1, a2, a3, a4));
     }
 
     /** Post an event to the queue after a specified delay
@@ -209,6 +218,11 @@ public:
      */
     template <typename F>
     int call_in(int ms, F f) {
+        struct local {
+            static void call(void *p) { (*static_cast<F*>(p))(); }
+            static void dtor(void *p) { static_cast<F*>(p)->~F(); }
+        };
+
         void *p = equeue_alloc(&_equeue, sizeof(F));
         if (!p) {
             return 0;
@@ -216,33 +230,33 @@ public:
 
         F *e = new (p) F(f);
         equeue_event_delay(e, ms);
-        equeue_event_dtor(e, &EventQueue::dtor<F>);
-        return equeue_post(&_equeue, &EventQueue::call<F>, e);
+        equeue_event_dtor(e, &local::dtor);
+        return equeue_post(&_equeue, &local::call, e);
     }
 
     template <typename F, typename A0>
     int call_in(int ms, F f, A0 a0) {
-        return call_in(ms, Context1<F,A0>(f,a0));
+        return call_in(ms, context10<F, A0>(f, a0));
     }
 
     template <typename F, typename A0, typename A1>
     int call_in(int ms, F f, A0 a0, A1 a1) {
-        return call_in(ms, Context2<F,A0,A1>(f,a0,a1));
+        return call_in(ms, context20<F, A0, A1>(f, a0, a1));
     }
 
     template <typename F, typename A0, typename A1, typename A2>
     int call_in(int ms, F f, A0 a0, A1 a1, A2 a2) {
-        return call_in(ms, Context3<F,A0,A1,A2>(f,a0,a1,a2));
+        return call_in(ms, context30<F, A0, A1, A2>(f, a0, a1, a2));
     }
 
     template <typename F, typename A0, typename A1, typename A2, typename A3>
     int call_in(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_in(ms, Context4<F,A0,A1,A2,A3>(f,a0,a1,a2,a3));
+        return call_in(ms, context40<F, A0, A1, A2, A3>(f, a0, a1, a2, a3));
     }
 
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_in(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_in(ms, Context5<F,A0,A1,A2,A3,A4>(f,a0,a1,a2,a3,a4));
+        return call_in(ms, context50<F, A0, A1, A2, A3, A4>(f, a0, a1, a2, a3, a4));
     }
 
     /** Post an event to the queue periodically
@@ -262,6 +276,11 @@ public:
      */
     template <typename F>
     int call_every(int ms, F f) {
+        struct local {
+            static void call(void *p) { (*static_cast<F*>(p))(); }
+            static void dtor(void *p) { static_cast<F*>(p)->~F(); }
+        };
+
         void *p = equeue_alloc(&_equeue, sizeof(F));
         if (!p) {
             return 0;
@@ -270,92 +289,84 @@ public:
         F *e = new (p) F(f);
         equeue_event_delay(e, ms);
         equeue_event_period(e, ms);
-        equeue_event_dtor(e, &EventQueue::dtor<F>);
-        return equeue_post(&_equeue, &EventQueue::call<F>, e);
+        equeue_event_dtor(e, &local::dtor);
+        return equeue_post(&_equeue, &local::call, e);
     }
 
     template <typename F, typename A0>
     int call_every(int ms, F f, A0 a0) {
-        return call_every(ms, Context1<F,A0>(f,a0));
+        return call_every(ms, context10<F, A0>(f, a0));
     }
 
     template <typename F, typename A0, typename A1>
     int call_every(int ms, F f, A0 a0, A1 a1) {
-        return call_every(ms, Context2<F,A0,A1>(f,a0,a1));
+        return call_every(ms, context20<F, A0, A1>(f, a0, a1));
     }
 
     template <typename F, typename A0, typename A1, typename A2>
     int call_every(int ms, F f, A0 a0, A1 a1, A2 a2) {
-        return call_every(ms, Context3<F,A0,A1,A2>(f,a0,a1,a2));
+        return call_every(ms, context30<F, A0, A1, A2>(f, a0, a1, a2));
     }
 
     template <typename F, typename A0, typename A1, typename A2, typename A3>
     int call_every(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_every(ms, Context4<F,A0,A1,A2,A3>(f,a0,a1,a2,a3));
+        return call_every(ms, context40<F, A0, A1, A2, A3>(f, a0, a1, a2, a3));
     }
 
     template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_every(int ms, F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_every(ms, Context5<F,A0,A1,A2,A3,A4>(f,a0,a1,a2,a3,a4));
+        return call_every(ms, context50<F, A0, A1, A2, A3, A4>(f, a0, a1, a2, a3, a4));
     }
 
+    /** Event creation
+     *
+     *  Constructs an event bound to the specified event queue. The specified
+     *  callback acts as the target for the event and is executed in the
+     *  context of the event queue's dispatch loop once posted.
+     *
+     *  @param f        Function to execute when the event is dispatched
+     *  @param a0..a4   Arguments to pass to the callback
+     *  @return         Event that will dispatch on the specific queue
+     */
+    template <typename F>
+    Event<void()> event(F f);
+
+    template <typename F, typename A0>
+    Event<void()> event(F f, A0 a0);
+
+    template <typename F, typename A0, typename A1>
+    Event<void()> event(F f, A0 a0, A1 a1);
+
+    template <typename F, typename A0, typename A1, typename A2>
+    Event<void()> event(F f, A0 a0, A1 a1, A2 a2);
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3>
+    Event<void()> event(F f, A0 a0, A1 a1, A2 a2, A3 a3);
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void()> event(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4);
+
 protected:
+    template <typename F>
+    friend class Event;
     struct equeue _equeue;
     mbed::Callback<void(int)> _update;
 
-    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
-    struct Context5 {
-        F f; A0 a0; A1 a1; A2 a2; A3 a3; A4 a4;
-
-        Context5(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
-            : f(f), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4) {}
-
-        void operator()() {
-            f(a0, a1, a2, a3, a4);
-        }
-    };
-
-    template <typename F, typename A0, typename A1, typename A2, typename A3>
-    struct Context4 {
-        F f; A0 a0; A1 a1; A2 a2; A3 a3;
-
-        Context4(F f, A0 a0, A1 a1, A2 a2, A3 a3)
-            : f(f), a0(a0), a1(a1), a2(a2), a3(a3) {}
+    template <typename F>
+    struct context00 {
+        F f;
+        context00(F f)
+            : f(f) {}
 
         void operator()() {
-            f(a0, a1, a2, a3);
-        }
-    };
-
-    template <typename F, typename A0, typename A1, typename A2>
-    struct Context3 {
-        F f; A0 a0; A1 a1; A2 a2;
-
-        Context3(F f, A0 a0, A1 a1, A2 a2)
-            : f(f), a0(a0), a1(a1), a2(a2) {}
-
-        void operator()() {
-            f(a0, a1, a2);
-        }
-    };
-
-    template <typename F, typename A0, typename A1>
-    struct Context2 {
-        F f; A0 a0; A1 a1;
-
-        Context2(F f, A0 a0, A1 a1)
-            : f(f), a0(a0), a1(a1) {}
-
-        void operator()() {
-            f(a0, a1);
+            f();
         }
     };
 
     template <typename F, typename A0>
-    struct Context1 {
+    struct context10 {
         F f; A0 a0;
-
-        Context1(F f, A0 a0)
+        context10(F f, A0 a0)
             : f(f), a0(a0) {}
 
         void operator()() {
@@ -363,17 +374,390 @@ protected:
         }
     };
 
-    template <typename T>
-    static void call(void *p) {
-        (*static_cast<T*>(p))();
-    }
+    template <typename F, typename A0, typename A1>
+    struct context20 {
+        F f; A0 a0; A1 a1;
+        context20(F f, A0 a0, A1 a1)
+            : f(f), a0(a0), a1(a1) {}
 
-    template <typename T>
-    static void dtor(void *p) {
-        static_cast<T*>(p)->~T();
-    }
+        void operator()() {
+            f(a0, a1);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2>
+    struct context30 {
+        F f; A0 a0; A1 a1; A2 a2;
+        context30(F f, A0 a0, A1 a1, A2 a2)
+            : f(f), a0(a0), a1(a1), a2(a2) {}
+
+        void operator()() {
+            f(a0, a1, a2);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3>
+    struct context40 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3;
+        context40(F f, A0 a0, A1 a1, A2 a2, A3 a3)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3) {}
+
+        void operator()() {
+            f(a0, a1, a2, a3);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
+    struct context50 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3; A4 a4;
+        context50(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4) {}
+
+        void operator()() {
+            f(a0, a1, a2, a3, a4);
+        }
+    };
+
+    template <typename F, typename B0>
+    struct context01 {
+        F f;
+        context01(F f)
+            : f(f) {}
+
+        void operator()(B0 b0) {
+            f(b0);
+        }
+    };
+
+    template <typename F, typename A0, typename B0>
+    struct context11 {
+        F f; A0 a0;
+        context11(F f, A0 a0)
+            : f(f), a0(a0) {}
+
+        void operator()(B0 b0) {
+            f(a0, b0);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename B0>
+    struct context21 {
+        F f; A0 a0; A1 a1;
+        context21(F f, A0 a0, A1 a1)
+            : f(f), a0(a0), a1(a1) {}
+
+        void operator()(B0 b0) {
+            f(a0, a1, b0);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename B0>
+    struct context31 {
+        F f; A0 a0; A1 a1; A2 a2;
+        context31(F f, A0 a0, A1 a1, A2 a2)
+            : f(f), a0(a0), a1(a1), a2(a2) {}
+
+        void operator()(B0 b0) {
+            f(a0, a1, a2, b0);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename B0>
+    struct context41 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3;
+        context41(F f, A0 a0, A1 a1, A2 a2, A3 a3)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3) {}
+
+        void operator()(B0 b0) {
+            f(a0, a1, a2, a3, b0);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4, typename B0>
+    struct context51 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3; A4 a4;
+        context51(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4) {}
+
+        void operator()(B0 b0) {
+            f(a0, a1, a2, a3, a4, b0);
+        }
+    };
+
+    template <typename F, typename B0, typename B1>
+    struct context02 {
+        F f;
+        context02(F f)
+            : f(f) {}
+
+        void operator()(B0 b0, B1 b1) {
+            f(b0, b1);
+        }
+    };
+
+    template <typename F, typename A0, typename B0, typename B1>
+    struct context12 {
+        F f; A0 a0;
+        context12(F f, A0 a0)
+            : f(f), a0(a0) {}
+
+        void operator()(B0 b0, B1 b1) {
+            f(a0, b0, b1);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename B0, typename B1>
+    struct context22 {
+        F f; A0 a0; A1 a1;
+        context22(F f, A0 a0, A1 a1)
+            : f(f), a0(a0), a1(a1) {}
+
+        void operator()(B0 b0, B1 b1) {
+            f(a0, a1, b0, b1);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename B0, typename B1>
+    struct context32 {
+        F f; A0 a0; A1 a1; A2 a2;
+        context32(F f, A0 a0, A1 a1, A2 a2)
+            : f(f), a0(a0), a1(a1), a2(a2) {}
+
+        void operator()(B0 b0, B1 b1) {
+            f(a0, a1, a2, b0, b1);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename B0, typename B1>
+    struct context42 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3;
+        context42(F f, A0 a0, A1 a1, A2 a2, A3 a3)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3) {}
+
+        void operator()(B0 b0, B1 b1) {
+            f(a0, a1, a2, a3, b0, b1);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4, typename B0, typename B1>
+    struct context52 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3; A4 a4;
+        context52(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4) {}
+
+        void operator()(B0 b0, B1 b1) {
+            f(a0, a1, a2, a3, a4, b0, b1);
+        }
+    };
+
+    template <typename F, typename B0, typename B1, typename B2>
+    struct context03 {
+        F f;
+        context03(F f)
+            : f(f) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2) {
+            f(b0, b1, b2);
+        }
+    };
+
+    template <typename F, typename A0, typename B0, typename B1, typename B2>
+    struct context13 {
+        F f; A0 a0;
+        context13(F f, A0 a0)
+            : f(f), a0(a0) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2) {
+            f(a0, b0, b1, b2);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename B0, typename B1, typename B2>
+    struct context23 {
+        F f; A0 a0; A1 a1;
+        context23(F f, A0 a0, A1 a1)
+            : f(f), a0(a0), a1(a1) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2) {
+            f(a0, a1, b0, b1, b2);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename B0, typename B1, typename B2>
+    struct context33 {
+        F f; A0 a0; A1 a1; A2 a2;
+        context33(F f, A0 a0, A1 a1, A2 a2)
+            : f(f), a0(a0), a1(a1), a2(a2) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2) {
+            f(a0, a1, a2, b0, b1, b2);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename B0, typename B1, typename B2>
+    struct context43 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3;
+        context43(F f, A0 a0, A1 a1, A2 a2, A3 a3)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2) {
+            f(a0, a1, a2, a3, b0, b1, b2);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4, typename B0, typename B1, typename B2>
+    struct context53 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3; A4 a4;
+        context53(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2) {
+            f(a0, a1, a2, a3, a4, b0, b1, b2);
+        }
+    };
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3>
+    struct context04 {
+        F f;
+        context04(F f)
+            : f(f) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3) {
+            f(b0, b1, b2, b3);
+        }
+    };
+
+    template <typename F, typename A0, typename B0, typename B1, typename B2, typename B3>
+    struct context14 {
+        F f; A0 a0;
+        context14(F f, A0 a0)
+            : f(f), a0(a0) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3) {
+            f(a0, b0, b1, b2, b3);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename B0, typename B1, typename B2, typename B3>
+    struct context24 {
+        F f; A0 a0; A1 a1;
+        context24(F f, A0 a0, A1 a1)
+            : f(f), a0(a0), a1(a1) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3) {
+            f(a0, a1, b0, b1, b2, b3);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename B0, typename B1, typename B2, typename B3>
+    struct context34 {
+        F f; A0 a0; A1 a1; A2 a2;
+        context34(F f, A0 a0, A1 a1, A2 a2)
+            : f(f), a0(a0), a1(a1), a2(a2) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3) {
+            f(a0, a1, a2, b0, b1, b2, b3);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename B0, typename B1, typename B2, typename B3>
+    struct context44 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3;
+        context44(F f, A0 a0, A1 a1, A2 a2, A3 a3)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3) {
+            f(a0, a1, a2, a3, b0, b1, b2, b3);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4, typename B0, typename B1, typename B2, typename B3>
+    struct context54 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3; A4 a4;
+        context54(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3) {
+            f(a0, a1, a2, a3, a4, b0, b1, b2, b3);
+        }
+    };
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
+    struct context05 {
+        F f;
+        context05(F f)
+            : f(f) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+            f(b0, b1, b2, b3, b4);
+        }
+    };
+
+    template <typename F, typename A0, typename B0, typename B1, typename B2, typename B3, typename B4>
+    struct context15 {
+        F f; A0 a0;
+        context15(F f, A0 a0)
+            : f(f), a0(a0) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+            f(a0, b0, b1, b2, b3, b4);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename B0, typename B1, typename B2, typename B3, typename B4>
+    struct context25 {
+        F f; A0 a0; A1 a1;
+        context25(F f, A0 a0, A1 a1)
+            : f(f), a0(a0), a1(a1) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+            f(a0, a1, b0, b1, b2, b3, b4);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename B0, typename B1, typename B2, typename B3, typename B4>
+    struct context35 {
+        F f; A0 a0; A1 a1; A2 a2;
+        context35(F f, A0 a0, A1 a1, A2 a2)
+            : f(f), a0(a0), a1(a1), a2(a2) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+            f(a0, a1, a2, b0, b1, b2, b3, b4);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename B0, typename B1, typename B2, typename B3, typename B4>
+    struct context45 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3;
+        context45(F f, A0 a0, A1 a1, A2 a2, A3 a3)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+            f(a0, a1, a2, a3, b0, b1, b2, b3, b4);
+        }
+    };
+
+    template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4, typename B0, typename B1, typename B2, typename B3, typename B4>
+    struct context55 {
+        F f; A0 a0; A1 a1; A2 a2; A3 a3; A4 a4;
+        context55(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4)
+            : f(f), a0(a0), a1(a1), a2(a2), a3(a3), a4(a4) {}
+
+        void operator()(B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+            f(a0, a1, a2, a3, a4, b0, b1, b2, b3, b4);
+        }
+    };
 };
 
+}
+
+
+// Include event class here to workaround cyclic dependencies
+// between Event and EventQueue
+//#include "Event.h"
+
+
+namespace events {
 
 }
 

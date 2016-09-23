@@ -143,6 +143,80 @@ void cancel_test1() {
 }
 
 
+// Testing the dynamic arguments to the event class
+unsigned counter = 0;
+
+void count5(unsigned a0, unsigned a1, unsigned a2, unsigned a3, unsigned a5) {
+    counter += a0 + a1 + a2 + a3 + a5;
+}
+
+void count4(unsigned a0, unsigned a1, unsigned a2, unsigned a3) {
+    counter += a0 + a1 + a2 + a3;
+}
+
+void count3(unsigned a0, unsigned a1, unsigned a2) {
+    counter += a0 + a1 + a2;
+}
+
+void count2(unsigned a0, unsigned a1) {
+    counter += a0 + a1;
+}
+
+void count1(unsigned a0) {
+    counter += a0;
+}
+
+void count0() {
+    counter += 0;
+}
+
+void event_class_test() {
+    counter = 0;
+    EventQueue queue(2048);
+
+    Event<void(int, int, int, int, int)> e5(&queue, count5);
+    Event<void(int, int, int, int)> e4(&queue, count5, 1);
+    Event<void(int, int, int)> e3(&queue, count5, 1, 1);
+    Event<void(int, int)> e2(&queue, count5, 1, 1, 1);
+    Event<void(int)> e1(&queue, count5, 1, 1, 1, 1);
+    Event<void()> e0(&queue, count5, 1, 1, 1, 1, 1);
+
+    e5.post(1, 1, 1, 1, 1);
+    e4.post(1, 1, 1, 1);
+    e3.post(1, 1, 1);
+    e2.post(1, 1);
+    e1.post(1);
+    e0.post();
+
+    queue.dispatch(0);
+
+    TEST_ASSERT_EQUAL(counter, 30);
+}
+
+void event_class_helper_test() {
+    counter = 0;
+    EventQueue queue(2048);
+
+    Event<void()> e5 = queue.event(count5, 1, 1, 1, 1, 1);
+    Event<void()> e4 = queue.event(count4, 1, 1, 1, 1);
+    Event<void()> e3 = queue.event(count3, 1, 1, 1);
+    Event<void()> e2 = queue.event(count2, 1, 1);
+    Event<void()> e1 = queue.event(count1, 1);
+    Event<void()> e0 = queue.event(count0);
+
+    e5.post();
+    e4.post();
+    e3.post();
+    e2.post();
+    e1.post();
+    e0.post();
+
+    queue.dispatch(0);
+
+    TEST_ASSERT_EQUAL(counter, 15);
+}
+
+
 // Test setup
 utest::v1::status_t test_setup(const size_t number_of_cases) {
     GREENTEA_SETUP(20, "default_auto");
@@ -164,6 +238,8 @@ const Case cases[] = {
     Case("Testing allocate failure 2", allocate_failure_test2),
 
     Case("Testing event cancel 1", cancel_test1<20>),
+    Case("Testing the event class", event_class_test),
+    Case("Testing the event class helpers", event_class_helper_test),
 };
 
 Specification specification(test_setup, cases);
