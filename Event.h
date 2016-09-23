@@ -188,6 +188,32 @@ public:
         return _event->id;
     }
 
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void call() {
+        int id = post();
+        MBED_ASSERT(id);
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void operator()() {
+        return call();
+    }
+
+    /** Static thunk for passing as C-style function
+     *
+     *  @param func     Event to call passed as a void pointer
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    static void thunk(void *func) {
+        return static_cast<Event*>(func)->call();
+    }
+
     /** Cancels the most recently posted event
      *
      *  Attempts to cancel the most recently posted event. It is safe to call
@@ -379,6 +405,32 @@ public:
 
         _event->id = _event->post(_event, a0);
         return _event->id;
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void call(A0 a0) {
+        int id = post(a0);
+        MBED_ASSERT(id);
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void operator()(A0 a0) {
+        return call(a0);
+    }
+
+    /** Static thunk for passing as C-style function
+     *
+     *  @param func     Event to call passed as a void pointer
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    static void thunk(void *func, A0 a0) {
+        return static_cast<Event*>(func)->call(a0);
     }
 
     /** Cancels the most recently posted event
@@ -574,6 +626,32 @@ public:
         return _event->id;
     }
 
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void call(A0 a0, A1 a1) {
+        int id = post(a0, a1);
+        MBED_ASSERT(id);
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void operator()(A0 a0, A1 a1) {
+        return call(a0, a1);
+    }
+
+    /** Static thunk for passing as C-style function
+     *
+     *  @param func     Event to call passed as a void pointer
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    static void thunk(void *func, A0 a0, A1 a1) {
+        return static_cast<Event*>(func)->call(a0, a1);
+    }
+
     /** Cancels the most recently posted event
      *
      *  Attempts to cancel the most recently posted event. It is safe to call
@@ -765,6 +843,32 @@ public:
 
         _event->id = _event->post(_event, a0, a1, a2);
         return _event->id;
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void call(A0 a0, A1 a1, A2 a2) {
+        int id = post(a0, a1, a2);
+        MBED_ASSERT(id);
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void operator()(A0 a0, A1 a1, A2 a2) {
+        return call(a0, a1, a2);
+    }
+
+    /** Static thunk for passing as C-style function
+     *
+     *  @param func     Event to call passed as a void pointer
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    static void thunk(void *func, A0 a0, A1 a1, A2 a2) {
+        return static_cast<Event*>(func)->call(a0, a1, a2);
     }
 
     /** Cancels the most recently posted event
@@ -960,6 +1064,32 @@ public:
         return _event->id;
     }
 
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void call(A0 a0, A1 a1, A2 a2, A3 a3) {
+        int id = post(a0, a1, a2, a3);
+        MBED_ASSERT(id);
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void operator()(A0 a0, A1 a1, A2 a2, A3 a3) {
+        return call(a0, a1, a2, a3);
+    }
+
+    /** Static thunk for passing as C-style function
+     *
+     *  @param func     Event to call passed as a void pointer
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    static void thunk(void *func, A0 a0, A1 a1, A2 a2, A3 a3) {
+        return static_cast<Event*>(func)->call(a0, a1, a2, a3);
+    }
+
     /** Cancels the most recently posted event
      *
      *  Attempts to cancel the most recently posted event. It is safe to call
@@ -1151,6 +1281,32 @@ public:
 
         _event->id = _event->post(_event, a0, a1, a2, a3, a4);
         return _event->id;
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void call(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+        int id = post(a0, a1, a2, a3, a4);
+        MBED_ASSERT(id);
+    }
+
+    /** Posts an event onto the underlying event queue, returning void
+     *
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    void operator()(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+        return call(a0, a1, a2, a3, a4);
+    }
+
+    /** Static thunk for passing as C-style function
+     *
+     *  @param func     Event to call passed as a void pointer
+     *  @param a0..a4   Arguments to pass to the event
+     */
+    static void thunk(void *func, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+        return static_cast<Event*>(func)->call(a0, a1, a2, a3, a4);
     }
 
     /** Cancels the most recently posted event
