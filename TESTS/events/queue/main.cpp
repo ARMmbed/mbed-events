@@ -102,10 +102,10 @@ void call_every_test() {
     queue.dispatch(N*100);
 }
 
-struct big { char data[4096]; } big;
+struct big { char data[1024]; } big;
 
 void allocate_failure_test1() {
-    EventQueue queue;
+    EventQueue queue(32);
     int id = queue.call((void (*)(struct big))0, big);
     TEST_ASSERT(!id);
 }
