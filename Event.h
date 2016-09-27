@@ -179,7 +179,7 @@ public:
      *                  be passed to EventQueue::cancel, or an id of 0 if
      *                  there is not enough memory to allocate the event.
      */
-    int post() {
+    int post() const {
         if (!_event) {
             return 0;
         }
@@ -192,7 +192,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void call() {
+    void call() const {
         int id = post();
         MBED_ASSERT(id);
     }
@@ -201,7 +201,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void operator()() {
+    void operator()() const {
         return call();
     }
 
@@ -225,7 +225,7 @@ public:
      *  function does not garuntee that the event will not execute after it
      *  returns, as the event may have already begun executing.
      */
-    void cancel() {
+    void cancel() const {
         if (_event) {
             equeue_cancel(_event->equeue, _event->id);
         }
@@ -398,7 +398,7 @@ public:
      *                  be passed to EventQueue::cancel, or an id of 0 if
      *                  there is not enough memory to allocate the event.
      */
-    int post(A0 a0) {
+    int post(A0 a0) const {
         if (!_event) {
             return 0;
         }
@@ -411,7 +411,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void call(A0 a0) {
+    void call(A0 a0) const {
         int id = post(a0);
         MBED_ASSERT(id);
     }
@@ -420,7 +420,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void operator()(A0 a0) {
+    void operator()(A0 a0) const {
         return call(a0);
     }
 
@@ -444,7 +444,7 @@ public:
      *  function does not garuntee that the event will not execute after it
      *  returns, as the event may have already begun executing.
      */
-    void cancel() {
+    void cancel() const {
         if (_event) {
             equeue_cancel(_event->equeue, _event->id);
         }
@@ -617,7 +617,7 @@ public:
      *                  be passed to EventQueue::cancel, or an id of 0 if
      *                  there is not enough memory to allocate the event.
      */
-    int post(A0 a0, A1 a1) {
+    int post(A0 a0, A1 a1) const {
         if (!_event) {
             return 0;
         }
@@ -630,7 +630,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void call(A0 a0, A1 a1) {
+    void call(A0 a0, A1 a1) const {
         int id = post(a0, a1);
         MBED_ASSERT(id);
     }
@@ -639,7 +639,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void operator()(A0 a0, A1 a1) {
+    void operator()(A0 a0, A1 a1) const {
         return call(a0, a1);
     }
 
@@ -663,7 +663,7 @@ public:
      *  function does not garuntee that the event will not execute after it
      *  returns, as the event may have already begun executing.
      */
-    void cancel() {
+    void cancel() const {
         if (_event) {
             equeue_cancel(_event->equeue, _event->id);
         }
@@ -836,7 +836,7 @@ public:
      *                  be passed to EventQueue::cancel, or an id of 0 if
      *                  there is not enough memory to allocate the event.
      */
-    int post(A0 a0, A1 a1, A2 a2) {
+    int post(A0 a0, A1 a1, A2 a2) const {
         if (!_event) {
             return 0;
         }
@@ -849,7 +849,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void call(A0 a0, A1 a1, A2 a2) {
+    void call(A0 a0, A1 a1, A2 a2) const {
         int id = post(a0, a1, a2);
         MBED_ASSERT(id);
     }
@@ -858,7 +858,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void operator()(A0 a0, A1 a1, A2 a2) {
+    void operator()(A0 a0, A1 a1, A2 a2) const {
         return call(a0, a1, a2);
     }
 
@@ -882,7 +882,7 @@ public:
      *  function does not garuntee that the event will not execute after it
      *  returns, as the event may have already begun executing.
      */
-    void cancel() {
+    void cancel() const {
         if (_event) {
             equeue_cancel(_event->equeue, _event->id);
         }
@@ -1055,7 +1055,7 @@ public:
      *                  be passed to EventQueue::cancel, or an id of 0 if
      *                  there is not enough memory to allocate the event.
      */
-    int post(A0 a0, A1 a1, A2 a2, A3 a3) {
+    int post(A0 a0, A1 a1, A2 a2, A3 a3) const {
         if (!_event) {
             return 0;
         }
@@ -1068,7 +1068,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void call(A0 a0, A1 a1, A2 a2, A3 a3) {
+    void call(A0 a0, A1 a1, A2 a2, A3 a3) const {
         int id = post(a0, a1, a2, a3);
         MBED_ASSERT(id);
     }
@@ -1077,7 +1077,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void operator()(A0 a0, A1 a1, A2 a2, A3 a3) {
+    void operator()(A0 a0, A1 a1, A2 a2, A3 a3) const {
         return call(a0, a1, a2, a3);
     }
 
@@ -1101,7 +1101,7 @@ public:
      *  function does not garuntee that the event will not execute after it
      *  returns, as the event may have already begun executing.
      */
-    void cancel() {
+    void cancel() const {
         if (_event) {
             equeue_cancel(_event->equeue, _event->id);
         }
@@ -1274,7 +1274,7 @@ public:
      *                  be passed to EventQueue::cancel, or an id of 0 if
      *                  there is not enough memory to allocate the event.
      */
-    int post(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    int post(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) const {
         if (!_event) {
             return 0;
         }
@@ -1287,7 +1287,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void call(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    void call(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) const {
         int id = post(a0, a1, a2, a3, a4);
         MBED_ASSERT(id);
     }
@@ -1296,7 +1296,7 @@ public:
      *
      *  @param a0..a4   Arguments to pass to the event
      */
-    void operator()(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    void operator()(A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) const {
         return call(a0, a1, a2, a3, a4);
     }
 
@@ -1320,7 +1320,7 @@ public:
      *  function does not garuntee that the event will not execute after it
      *  returns, as the event may have already begun executing.
      */
-    void cancel() {
+    void cancel() const {
         if (_event) {
             equeue_cancel(_event->equeue, _event->id);
         }
