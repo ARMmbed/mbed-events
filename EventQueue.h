@@ -751,14 +751,4 @@ protected:
 
 }
 
-
-// Include event class here to workaround cyclic dependencies
-// between Event and EventQueue
-//#include "Event.h"
-
-
-namespace events {
-
-}
-
 #endif
