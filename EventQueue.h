@@ -67,7 +67,7 @@ public:
      *  If ms is negative, the dispatch function will dispatch events
      *  indefinitely or until break_dispatch is called on this queue.
      *
-     *  When called with a finite timeout, the dispatch function is garunteed
+     *  When called with a finite timeout, the dispatch function is guaranteed
      *  to terminate. When called with a timeout of 0, the dispatch function
      *  does not wait and is irq safe.
      *
@@ -111,17 +111,18 @@ public:
      */
     void cancel(int id);
 
-    /** Background an event queue onto a single-shot timer
+    /** Background an event queue onto a single-shot timer-interrupt
      *
-     *  The provided update function will be called to indicate when the queue
-     *  should be dispatched. A negative timeout will be passed to the update
-     *  function when the time is no longer needed.
+     *  When updated, the event queue will call the provided update function
+     *  with a timeout indicating when the queue should be dispatched. A
+     *  negative timeout will be passed to the update function when the
+     *  timer-interrupt is no longer needed.
      *
-     *  Passing a null update function disables the existing timre.
+     *  Passing a null function disables the existing update function.
      *
      *  The background function allows an event queue to take advantage of
-     *  hardware timers or even other event loops, allowing an event queue to
-     *  be effectively backgrounded.
+     *  hardware timers or other event loops, allowing an event queue to be
+     *  ran in the background without consuming the foreground thread.
      *
      *  @param update   Function called to indicate when the queue should be
      *                  dispatched
@@ -136,7 +137,7 @@ public:
      *
      *  A null queue as the target will unchain the existing queue.
      *
-     *  The chain function allows multiple event queuest to be composed,
+     *  The chain function allows multiple event queues to be composed,
      *  sharing the context of a dispatch loop while still being managed
      *  independently
      *
@@ -145,7 +146,7 @@ public:
      */
     void chain(EventQueue *target);
 
-    /** Post an event to the queue
+    /** Calls an event on the queue
      *
      *  The specified callback will be executed in the context of the event
      *  queue's dispatch loop.
@@ -320,7 +321,7 @@ public:
         return call(mbed::callback(obj, method), a0, a1, a2, a3, a4);
     }
 
-    /** Post an event to the queue after a specified delay
+    /** Calls an event to the queue after a specified delay
      *
      *  The specified callback will be executed in the context of the event
      *  queue's dispatch loop.
@@ -497,7 +498,7 @@ public:
         return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
     }
 
-    /** Post an event to the queue periodically
+    /** Calls an event to the queue periodically
      *
      *  The specified callback will be executed in the context of the event
      *  queue's dispatch loop.
