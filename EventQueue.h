@@ -75,8 +75,8 @@ public:
      *                  value will dispatch events indefinitely
      *                  (default to -1)
      */
-    void dispatch(int ms);
-    void dispatch() { dispatch(-1); }
+    void dispatch(int ms=-1);
+    void dispatch_forever() { dispatch(); }
 
     /** Break out of a running event loop
      *
