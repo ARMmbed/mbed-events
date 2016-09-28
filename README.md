@@ -44,7 +44,7 @@ EventQueue queue(32*EVENTS_EVENT_SIZE);
 // Events can be posted to the underlying event queue with dynamic
 // context allocated from the specified buffer
 queue.call(printf, "hello %d %d %d %d\n", 1, 2, 3, 4);
-queue.call(Callback<void()>(&serial, &Serial::printf), "hi\n");
+queue.call(&serial, &Serial::printf, "hi\n");
 
 // The dispatch function provides the context for the running the queue
 // and can take a millisecond timeout to run for a fixed time or to just
