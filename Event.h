@@ -60,7 +60,7 @@ public:
                     return 0;
                 }
 
-                new (p) C((C){*reinterpret_cast<F*>(e+1)});
+                new (p) C(*reinterpret_cast<F*>(e+1));
                 equeue_event_delay(p, e->delay);
                 equeue_event_period(p, e->period);
                 equeue_event_dtor(p, &local::dtor);
@@ -226,27 +226,27 @@ public:
     // Convenience overloads for Event construction
     template <typename F, typename B0>
     Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context10<F, B0>){f, b0});
+        new (this) Event(q, EventQueue::context10<F, B0>(f, b0));
     }
 
     template <typename F, typename B0, typename B1>
     Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context20<F, B0, B1>){f, b0, b1});
+        new (this) Event(q, EventQueue::context20<F, B0, B1>(f, b0, b1));
     }
 
     template <typename F, typename B0, typename B1, typename B2>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context30<F, B0, B1, B2>){f, b0, b1, b2});
+        new (this) Event(q, EventQueue::context30<F, B0, B1, B2>(f, b0, b1, b2));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context40<F, B0, B1, B2, B3>){f, b0, b1, b2, b3});
+        new (this) Event(q, EventQueue::context40<F, B0, B1, B2, B3>(f, b0, b1, b2, b3));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context50<F, B0, B1, B2, B3, B4>){f, b0, b1, b2, b3, b4});
+        new (this) Event(q, EventQueue::context50<F, B0, B1, B2, B3, B4>(f, b0, b1, b2, b3, b4));
     }
 
     template <typename T, typename R, typename B0>
@@ -382,7 +382,7 @@ public:
                     return 0;
                 }
 
-                new (p) C((C){*reinterpret_cast<F*>(e+1), a0});
+                new (p) C(*reinterpret_cast<F*>(e+1), a0);
                 equeue_event_delay(p, e->delay);
                 equeue_event_period(p, e->period);
                 equeue_event_dtor(p, &local::dtor);
@@ -548,27 +548,27 @@ public:
     // Convenience overloads for Event construction
     template <typename F, typename B0>
     Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context11<F, B0, A0>){f, b0});
+        new (this) Event(q, EventQueue::context11<F, B0, A0>(f, b0));
     }
 
     template <typename F, typename B0, typename B1>
     Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context21<F, B0, B1, A0>){f, b0, b1});
+        new (this) Event(q, EventQueue::context21<F, B0, B1, A0>(f, b0, b1));
     }
 
     template <typename F, typename B0, typename B1, typename B2>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context31<F, B0, B1, B2, A0>){f, b0, b1, b2});
+        new (this) Event(q, EventQueue::context31<F, B0, B1, B2, A0>(f, b0, b1, b2));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context41<F, B0, B1, B2, B3, A0>){f, b0, b1, b2, b3});
+        new (this) Event(q, EventQueue::context41<F, B0, B1, B2, B3, A0>(f, b0, b1, b2, b3));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context51<F, B0, B1, B2, B3, B4, A0>){f, b0, b1, b2, b3, b4});
+        new (this) Event(q, EventQueue::context51<F, B0, B1, B2, B3, B4, A0>(f, b0, b1, b2, b3, b4));
     }
 
     template <typename T, typename R, typename B0>
@@ -704,7 +704,7 @@ public:
                     return 0;
                 }
 
-                new (p) C((C){*reinterpret_cast<F*>(e+1), a0, a1});
+                new (p) C(*reinterpret_cast<F*>(e+1), a0, a1);
                 equeue_event_delay(p, e->delay);
                 equeue_event_period(p, e->period);
                 equeue_event_dtor(p, &local::dtor);
@@ -870,27 +870,27 @@ public:
     // Convenience overloads for Event construction
     template <typename F, typename B0>
     Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context12<F, B0, A0, A1>){f, b0});
+        new (this) Event(q, EventQueue::context12<F, B0, A0, A1>(f, b0));
     }
 
     template <typename F, typename B0, typename B1>
     Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context22<F, B0, B1, A0, A1>){f, b0, b1});
+        new (this) Event(q, EventQueue::context22<F, B0, B1, A0, A1>(f, b0, b1));
     }
 
     template <typename F, typename B0, typename B1, typename B2>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context32<F, B0, B1, B2, A0, A1>){f, b0, b1, b2});
+        new (this) Event(q, EventQueue::context32<F, B0, B1, B2, A0, A1>(f, b0, b1, b2));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context42<F, B0, B1, B2, B3, A0, A1>){f, b0, b1, b2, b3});
+        new (this) Event(q, EventQueue::context42<F, B0, B1, B2, B3, A0, A1>(f, b0, b1, b2, b3));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context52<F, B0, B1, B2, B3, B4, A0, A1>){f, b0, b1, b2, b3, b4});
+        new (this) Event(q, EventQueue::context52<F, B0, B1, B2, B3, B4, A0, A1>(f, b0, b1, b2, b3, b4));
     }
 
     template <typename T, typename R, typename B0>
@@ -1026,7 +1026,7 @@ public:
                     return 0;
                 }
 
-                new (p) C((C){*reinterpret_cast<F*>(e+1), a0, a1, a2});
+                new (p) C(*reinterpret_cast<F*>(e+1), a0, a1, a2);
                 equeue_event_delay(p, e->delay);
                 equeue_event_period(p, e->period);
                 equeue_event_dtor(p, &local::dtor);
@@ -1192,27 +1192,27 @@ public:
     // Convenience overloads for Event construction
     template <typename F, typename B0>
     Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context13<F, B0, A0, A1, A2>){f, b0});
+        new (this) Event(q, EventQueue::context13<F, B0, A0, A1, A2>(f, b0));
     }
 
     template <typename F, typename B0, typename B1>
     Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context23<F, B0, B1, A0, A1, A2>){f, b0, b1});
+        new (this) Event(q, EventQueue::context23<F, B0, B1, A0, A1, A2>(f, b0, b1));
     }
 
     template <typename F, typename B0, typename B1, typename B2>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context33<F, B0, B1, B2, A0, A1, A2>){f, b0, b1, b2});
+        new (this) Event(q, EventQueue::context33<F, B0, B1, B2, A0, A1, A2>(f, b0, b1, b2));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context43<F, B0, B1, B2, B3, A0, A1, A2>){f, b0, b1, b2, b3});
+        new (this) Event(q, EventQueue::context43<F, B0, B1, B2, B3, A0, A1, A2>(f, b0, b1, b2, b3));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context53<F, B0, B1, B2, B3, B4, A0, A1, A2>){f, b0, b1, b2, b3, b4});
+        new (this) Event(q, EventQueue::context53<F, B0, B1, B2, B3, B4, A0, A1, A2>(f, b0, b1, b2, b3, b4));
     }
 
     template <typename T, typename R, typename B0>
@@ -1348,7 +1348,7 @@ public:
                     return 0;
                 }
 
-                new (p) C((C){*reinterpret_cast<F*>(e+1), a0, a1, a2, a3});
+                new (p) C(*reinterpret_cast<F*>(e+1), a0, a1, a2, a3);
                 equeue_event_delay(p, e->delay);
                 equeue_event_period(p, e->period);
                 equeue_event_dtor(p, &local::dtor);
@@ -1514,27 +1514,27 @@ public:
     // Convenience overloads for Event construction
     template <typename F, typename B0>
     Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context14<F, B0, A0, A1, A2, A3>){f, b0});
+        new (this) Event(q, EventQueue::context14<F, B0, A0, A1, A2, A3>(f, b0));
     }
 
     template <typename F, typename B0, typename B1>
     Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context24<F, B0, B1, A0, A1, A2, A3>){f, b0, b1});
+        new (this) Event(q, EventQueue::context24<F, B0, B1, A0, A1, A2, A3>(f, b0, b1));
     }
 
     template <typename F, typename B0, typename B1, typename B2>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context34<F, B0, B1, B2, A0, A1, A2, A3>){f, b0, b1, b2});
+        new (this) Event(q, EventQueue::context34<F, B0, B1, B2, A0, A1, A2, A3>(f, b0, b1, b2));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context44<F, B0, B1, B2, B3, A0, A1, A2, A3>){f, b0, b1, b2, b3});
+        new (this) Event(q, EventQueue::context44<F, B0, B1, B2, B3, A0, A1, A2, A3>(f, b0, b1, b2, b3));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context54<F, B0, B1, B2, B3, B4, A0, A1, A2, A3>){f, b0, b1, b2, b3, b4});
+        new (this) Event(q, EventQueue::context54<F, B0, B1, B2, B3, B4, A0, A1, A2, A3>(f, b0, b1, b2, b3, b4));
     }
 
     template <typename T, typename R, typename B0>
@@ -1670,7 +1670,7 @@ public:
                     return 0;
                 }
 
-                new (p) C((C){*reinterpret_cast<F*>(e+1), a0, a1, a2, a3, a4});
+                new (p) C(*reinterpret_cast<F*>(e+1), a0, a1, a2, a3, a4);
                 equeue_event_delay(p, e->delay);
                 equeue_event_period(p, e->period);
                 equeue_event_dtor(p, &local::dtor);
@@ -1836,27 +1836,27 @@ public:
     // Convenience overloads for Event construction
     template <typename F, typename B0>
     Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context15<F, B0, A0, A1, A2, A3, A4>){f, b0});
+        new (this) Event(q, EventQueue::context15<F, B0, A0, A1, A2, A3, A4>(f, b0));
     }
 
     template <typename F, typename B0, typename B1>
     Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context25<F, B0, B1, A0, A1, A2, A3, A4>){f, b0, b1});
+        new (this) Event(q, EventQueue::context25<F, B0, B1, A0, A1, A2, A3, A4>(f, b0, b1));
     }
 
     template <typename F, typename B0, typename B1, typename B2>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context35<F, B0, B1, B2, A0, A1, A2, A3, A4>){f, b0, b1, b2});
+        new (this) Event(q, EventQueue::context35<F, B0, B1, B2, A0, A1, A2, A3, A4>(f, b0, b1, b2));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context45<F, B0, B1, B2, B3, A0, A1, A2, A3, A4>){f, b0, b1, b2, b3});
+        new (this) Event(q, EventQueue::context45<F, B0, B1, B2, B3, A0, A1, A2, A3, A4>(f, b0, b1, b2, b3));
     }
 
     template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
     Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context55<F, B0, B1, B2, B3, B4, A0, A1, A2, A3, A4>){f, b0, b1, b2, b3, b4});
+        new (this) Event(q, EventQueue::context55<F, B0, B1, B2, B3, B4, A0, A1, A2, A3, A4>(f, b0, b1, b2, b3, b4));
     }
 
     template <typename T, typename R, typename B0>
