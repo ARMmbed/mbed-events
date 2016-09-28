@@ -89,31 +89,8 @@ public:
         }
     }
 
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context10<F, B0>){f, b0});
-    }
-
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context20<F, B0, B1>){f, b0, b1});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context30<F, B0, B1, B2>){f, b0, b1, b2});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context40<F, B0, B1, B2, B3>){f, b0, b1, b2, b3});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context50<F, B0, B1, B2, B3, B4>){f, b0, b1, b2, b3, b4});
-    }
-
+    /** Copy constructor for events
+     */
     Event(const Event &e) {
         _event = 0;
         if (e._event) {
@@ -122,6 +99,8 @@ public:
         }
     }
 
+    /** Assignment operator for events
+     */
     Event &operator=(const Event &that) {
         if (this != &that) {
             this->~Event();
@@ -131,6 +110,8 @@ public:
         return *this;
     }
 
+    /** Destructor for events
+     */
     ~Event() {
         if (_event) {
             _event->ref -= 1;
@@ -240,6 +221,133 @@ private:
 
         // F follows
     } *_event;
+
+public:
+    // Convenience overloads for Event construction
+    template <typename F, typename B0>
+    Event(EventQueue *q, F f, B0 b0) {
+        new (this) Event(q, (EventQueue::context10<F, B0>){f, b0});
+    }
+
+    template <typename F, typename B0, typename B1>
+    Event(EventQueue *q, F f, B0 b0, B1 b1) {
+        new (this) Event(q, (EventQueue::context20<F, B0, B1>){f, b0, b1});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, (EventQueue::context30<F, B0, B1, B2>){f, b0, b1, b2});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, (EventQueue::context40<F, B0, B1, B2, B3>){f, b0, b1, b2, b3});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, (EventQueue::context50<F, B0, B1, B2, B3, B4>){f, b0, b1, b2, b3, b4});
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0), B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0) const, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0) volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0) const volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1), B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1) const, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1) volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1) const volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2), B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2) const, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2) volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2) const volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3), B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3) const, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3) volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3) const volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, B4), B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, B4) const, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4) volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4) const volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
 };
 
 /** Event
@@ -303,31 +411,8 @@ public:
         }
     }
 
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context11<F, B0, A0>){f, b0});
-    }
-
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context21<F, B0, B1, A0>){f, b0, b1});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context31<F, B0, B1, B2, A0>){f, b0, b1, b2});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context41<F, B0, B1, B2, B3, A0>){f, b0, b1, b2, b3});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context51<F, B0, B1, B2, B3, B4, A0>){f, b0, b1, b2, b3, b4});
-    }
-
+    /** Copy constructor for events
+     */
     Event(const Event &e) {
         _event = 0;
         if (e._event) {
@@ -336,6 +421,8 @@ public:
         }
     }
 
+    /** Assignment operator for events
+     */
     Event &operator=(const Event &that) {
         if (this != &that) {
             this->~Event();
@@ -345,6 +432,8 @@ public:
         return *this;
     }
 
+    /** Destructor for events
+     */
     ~Event() {
         if (_event) {
             _event->ref -= 1;
@@ -454,6 +543,133 @@ private:
 
         // F follows
     } *_event;
+
+public:
+    // Convenience overloads for Event construction
+    template <typename F, typename B0>
+    Event(EventQueue *q, F f, B0 b0) {
+        new (this) Event(q, (EventQueue::context11<F, B0, A0>){f, b0});
+    }
+
+    template <typename F, typename B0, typename B1>
+    Event(EventQueue *q, F f, B0 b0, B1 b1) {
+        new (this) Event(q, (EventQueue::context21<F, B0, B1, A0>){f, b0, b1});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, (EventQueue::context31<F, B0, B1, B2, A0>){f, b0, b1, b2});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, (EventQueue::context41<F, B0, B1, B2, B3, A0>){f, b0, b1, b2, b3});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, (EventQueue::context51<F, B0, B1, B2, B3, B4, A0>){f, b0, b1, b2, b3, b4});
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, A0), B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, A0) const, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, A0) volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, A0) const volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, A0), B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, A0) const, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, A0) volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, A0) const volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, A0), B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, A0) const, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, A0) volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, A0) const volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, A0), B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, A0) const, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0) volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0) const volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0), B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0) const, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0) volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0) const volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
 };
 
 /** Event
@@ -517,31 +733,8 @@ public:
         }
     }
 
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context12<F, B0, A0, A1>){f, b0});
-    }
-
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context22<F, B0, B1, A0, A1>){f, b0, b1});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context32<F, B0, B1, B2, A0, A1>){f, b0, b1, b2});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context42<F, B0, B1, B2, B3, A0, A1>){f, b0, b1, b2, b3});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context52<F, B0, B1, B2, B3, B4, A0, A1>){f, b0, b1, b2, b3, b4});
-    }
-
+    /** Copy constructor for events
+     */
     Event(const Event &e) {
         _event = 0;
         if (e._event) {
@@ -550,6 +743,8 @@ public:
         }
     }
 
+    /** Assignment operator for events
+     */
     Event &operator=(const Event &that) {
         if (this != &that) {
             this->~Event();
@@ -559,6 +754,8 @@ public:
         return *this;
     }
 
+    /** Destructor for events
+     */
     ~Event() {
         if (_event) {
             _event->ref -= 1;
@@ -668,6 +865,133 @@ private:
 
         // F follows
     } *_event;
+
+public:
+    // Convenience overloads for Event construction
+    template <typename F, typename B0>
+    Event(EventQueue *q, F f, B0 b0) {
+        new (this) Event(q, (EventQueue::context12<F, B0, A0, A1>){f, b0});
+    }
+
+    template <typename F, typename B0, typename B1>
+    Event(EventQueue *q, F f, B0 b0, B1 b1) {
+        new (this) Event(q, (EventQueue::context22<F, B0, B1, A0, A1>){f, b0, b1});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, (EventQueue::context32<F, B0, B1, B2, A0, A1>){f, b0, b1, b2});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, (EventQueue::context42<F, B0, B1, B2, B3, A0, A1>){f, b0, b1, b2, b3});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, (EventQueue::context52<F, B0, B1, B2, B3, B4, A0, A1>){f, b0, b1, b2, b3, b4});
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, A0, A1), B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, A0, A1) const, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, A0, A1) volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, A0, A1) const volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, A0, A1), B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, A0, A1) const, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, A0, A1) volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, A0, A1) const volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, A0, A1), B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, A0, A1) const, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1) volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1) const volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1), B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1) const, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1) volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1) const volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1), B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1) const, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1) volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1) const volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
 };
 
 /** Event
@@ -731,31 +1055,8 @@ public:
         }
     }
 
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context13<F, B0, A0, A1, A2>){f, b0});
-    }
-
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context23<F, B0, B1, A0, A1, A2>){f, b0, b1});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context33<F, B0, B1, B2, A0, A1, A2>){f, b0, b1, b2});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context43<F, B0, B1, B2, B3, A0, A1, A2>){f, b0, b1, b2, b3});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context53<F, B0, B1, B2, B3, B4, A0, A1, A2>){f, b0, b1, b2, b3, b4});
-    }
-
+    /** Copy constructor for events
+     */
     Event(const Event &e) {
         _event = 0;
         if (e._event) {
@@ -764,6 +1065,8 @@ public:
         }
     }
 
+    /** Assignment operator for events
+     */
     Event &operator=(const Event &that) {
         if (this != &that) {
             this->~Event();
@@ -773,6 +1076,8 @@ public:
         return *this;
     }
 
+    /** Destructor for events
+     */
     ~Event() {
         if (_event) {
             _event->ref -= 1;
@@ -882,6 +1187,133 @@ private:
 
         // F follows
     } *_event;
+
+public:
+    // Convenience overloads for Event construction
+    template <typename F, typename B0>
+    Event(EventQueue *q, F f, B0 b0) {
+        new (this) Event(q, (EventQueue::context13<F, B0, A0, A1, A2>){f, b0});
+    }
+
+    template <typename F, typename B0, typename B1>
+    Event(EventQueue *q, F f, B0 b0, B1 b1) {
+        new (this) Event(q, (EventQueue::context23<F, B0, B1, A0, A1, A2>){f, b0, b1});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, (EventQueue::context33<F, B0, B1, B2, A0, A1, A2>){f, b0, b1, b2});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, (EventQueue::context43<F, B0, B1, B2, B3, A0, A1, A2>){f, b0, b1, b2, b3});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, (EventQueue::context53<F, B0, B1, B2, B3, B4, A0, A1, A2>){f, b0, b1, b2, b3, b4});
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, A0, A1, A2), B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, A0, A1, A2) const, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, A0, A1, A2) volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, A0, A1, A2) const volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, A0, A1, A2), B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, A0, A1, A2) const, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2) volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2) const volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2), B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2) const, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2) volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2) const volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2), B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2) const, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2) volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2) const volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2), B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2) const, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2) volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2) const volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
 };
 
 /** Event
@@ -945,31 +1377,8 @@ public:
         }
     }
 
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context14<F, B0, A0, A1, A2, A3>){f, b0});
-    }
-
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context24<F, B0, B1, A0, A1, A2, A3>){f, b0, b1});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context34<F, B0, B1, B2, A0, A1, A2, A3>){f, b0, b1, b2});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context44<F, B0, B1, B2, B3, A0, A1, A2, A3>){f, b0, b1, b2, b3});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context54<F, B0, B1, B2, B3, B4, A0, A1, A2, A3>){f, b0, b1, b2, b3, b4});
-    }
-
+    /** Copy constructor for events
+     */
     Event(const Event &e) {
         _event = 0;
         if (e._event) {
@@ -978,6 +1387,8 @@ public:
         }
     }
 
+    /** Assignment operator for events
+     */
     Event &operator=(const Event &that) {
         if (this != &that) {
             this->~Event();
@@ -987,6 +1398,8 @@ public:
         return *this;
     }
 
+    /** Destructor for events
+     */
     ~Event() {
         if (_event) {
             _event->ref -= 1;
@@ -1096,6 +1509,133 @@ private:
 
         // F follows
     } *_event;
+
+public:
+    // Convenience overloads for Event construction
+    template <typename F, typename B0>
+    Event(EventQueue *q, F f, B0 b0) {
+        new (this) Event(q, (EventQueue::context14<F, B0, A0, A1, A2, A3>){f, b0});
+    }
+
+    template <typename F, typename B0, typename B1>
+    Event(EventQueue *q, F f, B0 b0, B1 b1) {
+        new (this) Event(q, (EventQueue::context24<F, B0, B1, A0, A1, A2, A3>){f, b0, b1});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, (EventQueue::context34<F, B0, B1, B2, A0, A1, A2, A3>){f, b0, b1, b2});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, (EventQueue::context44<F, B0, B1, B2, B3, A0, A1, A2, A3>){f, b0, b1, b2, b3});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, (EventQueue::context54<F, B0, B1, B2, B3, B4, A0, A1, A2, A3>){f, b0, b1, b2, b3, b4});
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, A0, A1, A2, A3), B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, A0, A1, A2, A3) const, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, A0, A1, A2, A3) volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, A0, A1, A2, A3) const volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3), B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3) const, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3) volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3) const volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3), B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3) const, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3) volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3) const volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3), B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3) const, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3) volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3) const volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3), B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3) const, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3) volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3) const volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
 };
 
 /** Event
@@ -1159,31 +1699,8 @@ public:
         }
     }
 
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, (EventQueue::context15<F, B0, A0, A1, A2, A3, A4>){f, b0});
-    }
-
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, (EventQueue::context25<F, B0, B1, A0, A1, A2, A3, A4>){f, b0, b1});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, (EventQueue::context35<F, B0, B1, B2, A0, A1, A2, A3, A4>){f, b0, b1, b2});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, (EventQueue::context45<F, B0, B1, B2, B3, A0, A1, A2, A3, A4>){f, b0, b1, b2, b3});
-    }
-
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, (EventQueue::context55<F, B0, B1, B2, B3, B4, A0, A1, A2, A3, A4>){f, b0, b1, b2, b3, b4});
-    }
-
+    /** Copy constructor for events
+     */
     Event(const Event &e) {
         _event = 0;
         if (e._event) {
@@ -1192,6 +1709,8 @@ public:
         }
     }
 
+    /** Assignment operator for events
+     */
     Event &operator=(const Event &that) {
         if (this != &that) {
             this->~Event();
@@ -1201,6 +1720,8 @@ public:
         return *this;
     }
 
+    /** Destructor for events
+     */
     ~Event() {
         if (_event) {
             _event->ref -= 1;
@@ -1310,8 +1831,139 @@ private:
 
         // F follows
     } *_event;
+
+public:
+    // Convenience overloads for Event construction
+    template <typename F, typename B0>
+    Event(EventQueue *q, F f, B0 b0) {
+        new (this) Event(q, (EventQueue::context15<F, B0, A0, A1, A2, A3, A4>){f, b0});
+    }
+
+    template <typename F, typename B0, typename B1>
+    Event(EventQueue *q, F f, B0 b0, B1 b1) {
+        new (this) Event(q, (EventQueue::context25<F, B0, B1, A0, A1, A2, A3, A4>){f, b0, b1});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, (EventQueue::context35<F, B0, B1, B2, A0, A1, A2, A3, A4>){f, b0, b1, b2});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, (EventQueue::context45<F, B0, B1, B2, B3, A0, A1, A2, A3, A4>){f, b0, b1, b2, b3});
+    }
+
+    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, (EventQueue::context55<F, B0, B1, B2, B3, B4, A0, A1, A2, A3, A4>){f, b0, b1, b2, b3, b4});
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, A0, A1, A2, A3, A4), B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, A0, A1, A2, A3, A4) const, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, A0, A1, A2, A3, A4) volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, A0, A1, A2, A3, A4) const volatile, B0 b0) {
+        new (this) Event(q, mbed::callback(obj, method), b0);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3, A4), B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3, A4) const, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3, A4) volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3, A4) const volatile, B0 b0, B1 b1) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3, A4), B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3, A4) const, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3, A4) volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3, A4) const volatile, B0 b0, B1 b1, B2 b2) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3, A4), B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3, A4) const, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3, A4) volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3, A4) const volatile, B0 b0, B1 b1, B2 b2, B3 b3) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4), B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) const, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
+
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4>
+    Event(EventQueue *q, const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) const volatile, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
+        new (this) Event(q, mbed::callback(obj, method), b0, b1, b2, b3, b4);
+    }
 };
 
+
+
+// Convenience functions declared here to avoid cyclic
+// dependency between Event and EventQueue
 
 template <typename F>
 Event<void()> EventQueue::event(F f) {
@@ -1341,6 +1993,125 @@ Event<void()> EventQueue::event(F f, A0 a0, A1 a1, A2 a2, A3 a3) {
 template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
 Event<void()> EventQueue::event(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
     return Event<void()>(this, f, a0, a1, a2, a3, a4);
+}
+template <typename T, typename R>
+Event<void()> EventQueue::event(T *obj, R (T::*method)()) {
+    return Event<void()>(this, mbed::callback(obj, method));
+}
+
+template <typename T, typename R>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)() const) {
+    return Event<void()>(this, mbed::callback(obj, method));
+}
+
+template <typename T, typename R>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)() volatile) {
+    return Event<void()>(this, mbed::callback(obj, method));
+}
+
+template <typename T, typename R>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)() const volatile) {
+    return Event<void()>(this, mbed::callback(obj, method));
+}
+
+template <typename T, typename R, typename A0>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(A0), A0 a0) {
+    return Event<void()>(this, mbed::callback(obj, method), a0);
+}
+
+template <typename T, typename R, typename A0>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0) const, A0 a0) {
+    return Event<void()>(this, mbed::callback(obj, method), a0);
+}
+
+template <typename T, typename R, typename A0>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0) volatile, A0 a0) {
+    return Event<void()>(this, mbed::callback(obj, method), a0);
+}
+
+template <typename T, typename R, typename A0>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0) const volatile, A0 a0) {
+    return Event<void()>(this, mbed::callback(obj, method), a0);
+}
+
+template <typename T, typename R, typename A0, typename A1>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(A0, A1), A0 a0, A1 a1) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1);
+}
+
+template <typename T, typename R, typename A0, typename A1>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0, A1) const, A0 a0, A1 a1) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1);
+}
+
+template <typename T, typename R, typename A0, typename A1>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0, A1) volatile, A0 a0, A1 a1) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1);
+}
+
+template <typename T, typename R, typename A0, typename A1>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0, A1) const volatile, A0 a0, A1 a1) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(A0, A1, A2), A0 a0, A1 a1, A2 a2) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0, A1, A2) const, A0 a0, A1 a1, A2 a2) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0, A1, A2) volatile, A0 a0, A1 a1, A2 a2) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0, A1, A2) const volatile, A0 a0, A1 a1, A2 a2) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(A0, A1, A2, A3), A0 a0, A1 a1, A2 a2, A3 a3) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0, A1, A2, A3) const, A0 a0, A1 a1, A2 a2, A3 a3) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0, A1, A2, A3) volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0, A1, A2, A3) const volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(A0, A1, A2, A3, A4), A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0, A1, A2, A3, A4) const, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+}
+
+template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) const volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
+    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3, a4);
 }
 
 }
