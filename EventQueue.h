@@ -1349,6 +1349,1866 @@ public:
     template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
     Event<void()> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4) const volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
 
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename A0>
+    Event<void(A0)> event(R (*func)(A0));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0>
+    Event<void(A0)> event(F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0>
+    Event<void(A0)> event(const F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0>
+    Event<void(A0)> event(volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0>
+    Event<void(A0)> event(const volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0>
+    Event<void(A0)> event(T *obj, R (T::*method)(A0));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0>
+    Event<void(A0)> event(const T *obj, R (T::*method)(A0) const);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0>
+    Event<void(A0)> event(volatile T *obj, R (T::*method)(A0) volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0>
+    Event<void(A0)> event(const volatile T *obj, R (T::*method)(A0) const volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(R (*func)(B0, A0), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(const F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(const volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(T *obj, R (T::*method)(B0, A0), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(const T *obj, R (T::*method)(B0, A0) const, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(volatile T *obj, R (T::*method)(B0, A0) volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0>
+    Event<void(A0)> event(const volatile T *obj, R (T::*method)(B0, A0) const volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(R (*func)(B0, B1, A0), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(const F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(const volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(T *obj, R (T::*method)(B0, B1, A0), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(const T *obj, R (T::*method)(B0, B1, A0) const, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(volatile T *obj, R (T::*method)(B0, B1, A0) volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0>
+    Event<void(A0)> event(const volatile T *obj, R (T::*method)(B0, B1, A0) const volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(R (*func)(B0, B1, B2, A0), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(const F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(const volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(T *obj, R (T::*method)(B0, B1, B2, A0), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(const T *obj, R (T::*method)(B0, B1, B2, A0) const, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(volatile T *obj, R (T::*method)(B0, B1, B2, A0) volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0>
+    Event<void(A0)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, A0) const volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(R (*func)(B0, B1, B2, B3, A0), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(T *obj, R (T::*method)(B0, B1, B2, B3, A0), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, A0) const, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0) volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0>
+    Event<void(A0)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0) const volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(R (*func)(B0, B1, B2, B3, B4, A0), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0) const, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0) volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0>
+    Event<void(A0)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0) const volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(R (*func)(A0, A1));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(const F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(T *obj, R (T::*method)(A0, A1));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(const T *obj, R (T::*method)(A0, A1) const);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile T *obj, R (T::*method)(A0, A1) volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile T *obj, R (T::*method)(A0, A1) const volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(R (*func)(B0, A0, A1), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(const F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(T *obj, R (T::*method)(B0, A0, A1), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(const T *obj, R (T::*method)(B0, A0, A1) const, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile T *obj, R (T::*method)(B0, A0, A1) volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile T *obj, R (T::*method)(B0, A0, A1) const volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(R (*func)(B0, B1, A0, A1), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(const F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(T *obj, R (T::*method)(B0, B1, A0, A1), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(const T *obj, R (T::*method)(B0, B1, A0, A1) const, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile T *obj, R (T::*method)(B0, B1, A0, A1) volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile T *obj, R (T::*method)(B0, B1, A0, A1) const volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(R (*func)(B0, B1, B2, A0, A1), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(const F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(T *obj, R (T::*method)(B0, B1, B2, A0, A1), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(const T *obj, R (T::*method)(B0, B1, B2, A0, A1) const, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1) volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1) const volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(R (*func)(B0, B1, B2, B3, A0, A1), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1) const, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1) volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1) const volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(R (*func)(B0, B1, B2, B3, B4, A0, A1), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1) const, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1) volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1>
+    Event<void(A0, A1)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1) const volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(R (*func)(A0, A1, A2));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(T *obj, R (T::*method)(A0, A1, A2));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const T *obj, R (T::*method)(A0, A1, A2) const);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile T *obj, R (T::*method)(A0, A1, A2) volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile T *obj, R (T::*method)(A0, A1, A2) const volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(R (*func)(B0, A0, A1, A2), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(T *obj, R (T::*method)(B0, A0, A1, A2), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const T *obj, R (T::*method)(B0, A0, A1, A2) const, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile T *obj, R (T::*method)(B0, A0, A1, A2) volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile T *obj, R (T::*method)(B0, A0, A1, A2) const volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(R (*func)(B0, B1, A0, A1, A2), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(T *obj, R (T::*method)(B0, B1, A0, A1, A2), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const T *obj, R (T::*method)(B0, B1, A0, A1, A2) const, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2) volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2) const volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(R (*func)(B0, B1, B2, A0, A1, A2), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2) const, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2) volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2) const volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(R (*func)(B0, B1, B2, B3, A0, A1, A2), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2) const, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2) volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2) const volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(R (*func)(B0, B1, B2, B3, B4, A0, A1, A2), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2) const, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2) volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2>
+    Event<void(A0, A1, A2)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2) const volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(R (*func)(A0, A1, A2, A3));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2, A3), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2, A3) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2, A3) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2, A3) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(T *obj, R (T::*method)(A0, A1, A2, A3));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const T *obj, R (T::*method)(A0, A1, A2, A3) const);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile T *obj, R (T::*method)(A0, A1, A2, A3) volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile T *obj, R (T::*method)(A0, A1, A2, A3) const volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(R (*func)(B0, A0, A1, A2, A3), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2, A3), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2, A3) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2, A3) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2, A3) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(T *obj, R (T::*method)(B0, A0, A1, A2, A3), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const T *obj, R (T::*method)(B0, A0, A1, A2, A3) const, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile T *obj, R (T::*method)(B0, A0, A1, A2, A3) volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile T *obj, R (T::*method)(B0, A0, A1, A2, A3) const volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(R (*func)(B0, B1, A0, A1, A2, A3), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2, A3), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2, A3) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2, A3) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2, A3) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3) const, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3) volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3) const volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(R (*func)(B0, B1, B2, A0, A1, A2, A3), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2, A3), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2, A3) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2, A3) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2, A3) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3) const, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3) volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3) const volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(R (*func)(B0, B1, B2, B3, A0, A1, A2, A3), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2, A3), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2, A3) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2, A3) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2, A3) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3) const, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3) volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3) const volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(R (*func)(B0, B1, B2, B3, B4, A0, A1, A2, A3), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2, A3), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2, A3) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2, A3) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2, A3) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3) const, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3) volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3>
+    Event<void(A0, A1, A2, A3)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3) const volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(R (*func)(A0, A1, A2, A3, A4));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2, A3, A4), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2, A3, A4) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2, A3, A4) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile F func, typename detail::enable_if<
+                detail::is_type<R (F::*)(A0, A1, A2, A3, A4) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(T *obj, R (T::*method)(A0, A1, A2, A3, A4));
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const T *obj, R (T::*method)(A0, A1, A2, A3, A4) const);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) const volatile);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(R (*func)(B0, A0, A1, A2, A3, A4), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2, A3, A4), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2, A3, A4) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2, A3, A4) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile F func, C0 c0, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, A0, A1, A2, A3, A4) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(T *obj, R (T::*method)(B0, A0, A1, A2, A3, A4), C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const T *obj, R (T::*method)(B0, A0, A1, A2, A3, A4) const, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile T *obj, R (T::*method)(B0, A0, A1, A2, A3, A4) volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename C0, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile T *obj, R (T::*method)(B0, A0, A1, A2, A3, A4) const volatile, C0 c0);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(R (*func)(B0, B1, A0, A1, A2, A3, A4), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2, A3, A4), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2, A3, A4) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2, A3, A4) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, A0, A1, A2, A3, A4) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3, A4), C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3, A4) const, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3, A4) volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename C0, typename C1, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile T *obj, R (T::*method)(B0, B1, A0, A1, A2, A3, A4) const volatile, C0 c0, C1 c1);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(R (*func)(B0, B1, B2, A0, A1, A2, A3, A4), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2, A3, A4), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2, A3, A4) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2, A3, A4) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, A0, A1, A2, A3, A4) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3, A4), C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3, A4) const, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3, A4) volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, A0, A1, A2, A3, A4) const volatile, C0 c0, C1 c1, C2 c2);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(R (*func)(B0, B1, B2, B3, A0, A1, A2, A3, A4), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2, A3, A4), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2, A3, A4) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2, A3, A4) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, A0, A1, A2, A3, A4) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3, A4), C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3, A4) const, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3, A4) volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, A0, A1, A2, A3, A4) const volatile, C0 c0, C1 c1, C2 c2, C3 c3);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(R (*func)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4), &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) const, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+                detail::is_type<R (F::*)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) const volatile, &F::operator()>::value
+            >::type = detail::nil());
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) const, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
+    /** Creates an event bound to the event queue
+     *  @see EventQueue::event
+     */
+    template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4, typename A0, typename A1, typename A2, typename A3, typename A4>
+    Event<void(A0, A1, A2, A3, A4)> event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4, A0, A1, A2, A3, A4) const volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4);
+
 protected:
     template <typename F>
     friend class Event;
