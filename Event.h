@@ -226,41 +226,41 @@ public:
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, EventQueue::context10<F, B0>(f, b0));
+    template <typename F, typename C0>
+    Event(EventQueue *q, F f, C0 c0) {
+        new (this) Event(q, EventQueue::context10<F, C0>(f, c0));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, EventQueue::context20<F, B0, B1>(f, b0, b1));
+    template <typename F, typename C0, typename C1>
+    Event(EventQueue *q, F f, C0 c0, C1 c1) {
+        new (this) Event(q, EventQueue::context20<F, C0, C1>(f, c0, c1));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, EventQueue::context30<F, B0, B1, B2>(f, b0, b1, b2));
+    template <typename F, typename C0, typename C1, typename C2>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2) {
+        new (this) Event(q, EventQueue::context30<F, C0, C1, C2>(f, c0, c1, c2));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, EventQueue::context40<F, B0, B1, B2, B3>(f, b0, b1, b2, b3));
+    template <typename F, typename C0, typename C1, typename C2, typename C3>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3) {
+        new (this) Event(q, EventQueue::context40<F, C0, C1, C2, C3>(f, c0, c1, c2, c3));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, EventQueue::context50<F, B0, B1, B2, B3, B4>(f, b0, b1, b2, b3, b4));
+    template <typename F, typename C0, typename C1, typename C2, typename C3, typename C4>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+        new (this) Event(q, EventQueue::context50<F, C0, C1, C2, C3, C4>(f, c0, c1, c2, c3, c4));
     }
 
     /** Create an event
@@ -622,41 +622,41 @@ public:
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, EventQueue::context11<F, B0, A0>(f, b0));
+    template <typename F, typename C0>
+    Event(EventQueue *q, F f, C0 c0) {
+        new (this) Event(q, EventQueue::context11<F, C0, A0>(f, c0));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, EventQueue::context21<F, B0, B1, A0>(f, b0, b1));
+    template <typename F, typename C0, typename C1>
+    Event(EventQueue *q, F f, C0 c0, C1 c1) {
+        new (this) Event(q, EventQueue::context21<F, C0, C1, A0>(f, c0, c1));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, EventQueue::context31<F, B0, B1, B2, A0>(f, b0, b1, b2));
+    template <typename F, typename C0, typename C1, typename C2>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2) {
+        new (this) Event(q, EventQueue::context31<F, C0, C1, C2, A0>(f, c0, c1, c2));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, EventQueue::context41<F, B0, B1, B2, B3, A0>(f, b0, b1, b2, b3));
+    template <typename F, typename C0, typename C1, typename C2, typename C3>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3) {
+        new (this) Event(q, EventQueue::context41<F, C0, C1, C2, C3, A0>(f, c0, c1, c2, c3));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, EventQueue::context51<F, B0, B1, B2, B3, B4, A0>(f, b0, b1, b2, b3, b4));
+    template <typename F, typename C0, typename C1, typename C2, typename C3, typename C4>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+        new (this) Event(q, EventQueue::context51<F, C0, C1, C2, C3, C4, A0>(f, c0, c1, c2, c3, c4));
     }
 
     /** Create an event
@@ -1018,41 +1018,41 @@ public:
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, EventQueue::context12<F, B0, A0, A1>(f, b0));
+    template <typename F, typename C0>
+    Event(EventQueue *q, F f, C0 c0) {
+        new (this) Event(q, EventQueue::context12<F, C0, A0, A1>(f, c0));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, EventQueue::context22<F, B0, B1, A0, A1>(f, b0, b1));
+    template <typename F, typename C0, typename C1>
+    Event(EventQueue *q, F f, C0 c0, C1 c1) {
+        new (this) Event(q, EventQueue::context22<F, C0, C1, A0, A1>(f, c0, c1));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, EventQueue::context32<F, B0, B1, B2, A0, A1>(f, b0, b1, b2));
+    template <typename F, typename C0, typename C1, typename C2>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2) {
+        new (this) Event(q, EventQueue::context32<F, C0, C1, C2, A0, A1>(f, c0, c1, c2));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, EventQueue::context42<F, B0, B1, B2, B3, A0, A1>(f, b0, b1, b2, b3));
+    template <typename F, typename C0, typename C1, typename C2, typename C3>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3) {
+        new (this) Event(q, EventQueue::context42<F, C0, C1, C2, C3, A0, A1>(f, c0, c1, c2, c3));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, EventQueue::context52<F, B0, B1, B2, B3, B4, A0, A1>(f, b0, b1, b2, b3, b4));
+    template <typename F, typename C0, typename C1, typename C2, typename C3, typename C4>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+        new (this) Event(q, EventQueue::context52<F, C0, C1, C2, C3, C4, A0, A1>(f, c0, c1, c2, c3, c4));
     }
 
     /** Create an event
@@ -1414,41 +1414,41 @@ public:
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, EventQueue::context13<F, B0, A0, A1, A2>(f, b0));
+    template <typename F, typename C0>
+    Event(EventQueue *q, F f, C0 c0) {
+        new (this) Event(q, EventQueue::context13<F, C0, A0, A1, A2>(f, c0));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, EventQueue::context23<F, B0, B1, A0, A1, A2>(f, b0, b1));
+    template <typename F, typename C0, typename C1>
+    Event(EventQueue *q, F f, C0 c0, C1 c1) {
+        new (this) Event(q, EventQueue::context23<F, C0, C1, A0, A1, A2>(f, c0, c1));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, EventQueue::context33<F, B0, B1, B2, A0, A1, A2>(f, b0, b1, b2));
+    template <typename F, typename C0, typename C1, typename C2>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2) {
+        new (this) Event(q, EventQueue::context33<F, C0, C1, C2, A0, A1, A2>(f, c0, c1, c2));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, EventQueue::context43<F, B0, B1, B2, B3, A0, A1, A2>(f, b0, b1, b2, b3));
+    template <typename F, typename C0, typename C1, typename C2, typename C3>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3) {
+        new (this) Event(q, EventQueue::context43<F, C0, C1, C2, C3, A0, A1, A2>(f, c0, c1, c2, c3));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, EventQueue::context53<F, B0, B1, B2, B3, B4, A0, A1, A2>(f, b0, b1, b2, b3, b4));
+    template <typename F, typename C0, typename C1, typename C2, typename C3, typename C4>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+        new (this) Event(q, EventQueue::context53<F, C0, C1, C2, C3, C4, A0, A1, A2>(f, c0, c1, c2, c3, c4));
     }
 
     /** Create an event
@@ -1810,41 +1810,41 @@ public:
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, EventQueue::context14<F, B0, A0, A1, A2, A3>(f, b0));
+    template <typename F, typename C0>
+    Event(EventQueue *q, F f, C0 c0) {
+        new (this) Event(q, EventQueue::context14<F, C0, A0, A1, A2, A3>(f, c0));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, EventQueue::context24<F, B0, B1, A0, A1, A2, A3>(f, b0, b1));
+    template <typename F, typename C0, typename C1>
+    Event(EventQueue *q, F f, C0 c0, C1 c1) {
+        new (this) Event(q, EventQueue::context24<F, C0, C1, A0, A1, A2, A3>(f, c0, c1));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, EventQueue::context34<F, B0, B1, B2, A0, A1, A2, A3>(f, b0, b1, b2));
+    template <typename F, typename C0, typename C1, typename C2>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2) {
+        new (this) Event(q, EventQueue::context34<F, C0, C1, C2, A0, A1, A2, A3>(f, c0, c1, c2));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, EventQueue::context44<F, B0, B1, B2, B3, A0, A1, A2, A3>(f, b0, b1, b2, b3));
+    template <typename F, typename C0, typename C1, typename C2, typename C3>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3) {
+        new (this) Event(q, EventQueue::context44<F, C0, C1, C2, C3, A0, A1, A2, A3>(f, c0, c1, c2, c3));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, EventQueue::context54<F, B0, B1, B2, B3, B4, A0, A1, A2, A3>(f, b0, b1, b2, b3, b4));
+    template <typename F, typename C0, typename C1, typename C2, typename C3, typename C4>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+        new (this) Event(q, EventQueue::context54<F, C0, C1, C2, C3, C4, A0, A1, A2, A3>(f, c0, c1, c2, c3, c4));
     }
 
     /** Create an event
@@ -2206,41 +2206,41 @@ public:
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0>
-    Event(EventQueue *q, F f, B0 b0) {
-        new (this) Event(q, EventQueue::context15<F, B0, A0, A1, A2, A3, A4>(f, b0));
+    template <typename F, typename C0>
+    Event(EventQueue *q, F f, C0 c0) {
+        new (this) Event(q, EventQueue::context15<F, C0, A0, A1, A2, A3, A4>(f, c0));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1>
-    Event(EventQueue *q, F f, B0 b0, B1 b1) {
-        new (this) Event(q, EventQueue::context25<F, B0, B1, A0, A1, A2, A3, A4>(f, b0, b1));
+    template <typename F, typename C0, typename C1>
+    Event(EventQueue *q, F f, C0 c0, C1 c1) {
+        new (this) Event(q, EventQueue::context25<F, C0, C1, A0, A1, A2, A3, A4>(f, c0, c1));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2) {
-        new (this) Event(q, EventQueue::context35<F, B0, B1, B2, A0, A1, A2, A3, A4>(f, b0, b1, b2));
+    template <typename F, typename C0, typename C1, typename C2>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2) {
+        new (this) Event(q, EventQueue::context35<F, C0, C1, C2, A0, A1, A2, A3, A4>(f, c0, c1, c2));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3) {
-        new (this) Event(q, EventQueue::context45<F, B0, B1, B2, B3, A0, A1, A2, A3, A4>(f, b0, b1, b2, b3));
+    template <typename F, typename C0, typename C1, typename C2, typename C3>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3) {
+        new (this) Event(q, EventQueue::context45<F, C0, C1, C2, C3, A0, A1, A2, A3, A4>(f, c0, c1, c2, c3));
     }
 
     /** Create an event
      *  @see Event::Event
      */
-    template <typename F, typename B0, typename B1, typename B2, typename B3, typename B4>
-    Event(EventQueue *q, F f, B0 b0, B1 b1, B2 b2, B3 b3, B4 b4) {
-        new (this) Event(q, EventQueue::context55<F, B0, B1, B2, B3, B4, A0, A1, A2, A3, A4>(f, b0, b1, b2, b3, b4));
+    template <typename F, typename C0, typename C1, typename C2, typename C3, typename C4>
+    Event(EventQueue *q, F f, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+        new (this) Event(q, EventQueue::context55<F, C0, C1, C2, C3, C4, A0, A1, A2, A3, A4>(f, c0, c1, c2, c3, c4));
     }
 
     /** Create an event
@@ -2408,34 +2408,37 @@ public:
 
 // Convenience functions declared here to avoid cyclic
 // dependency between Event and EventQueue
-template <typename F>
-Event<void()> EventQueue::event(F f) {
-    return Event<void()>(this, f);
+template <typename R>
+Event<void()> EventQueue::event(R (*func)()) {
+    return Event<void()>(this, func);
 }
 
-template <typename F, typename A0>
-Event<void()> EventQueue::event(F f, A0 a0) {
-    return Event<void()>(this, f, a0);
+template <typename F, typename R>
+Event<void()> EventQueue::event(F func, typename detail::enable_if<
+            detail::is_type<R (F::*)(), &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func);
 }
 
-template <typename F, typename A0, typename A1>
-Event<void()> EventQueue::event(F f, A0 a0, A1 a1) {
-    return Event<void()>(this, f, a0, a1);
+template <typename F, typename R>
+Event<void()> EventQueue::event(const F func, typename detail::enable_if<
+            detail::is_type<R (F::*)() const, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func);
 }
 
-template <typename F, typename A0, typename A1, typename A2>
-Event<void()> EventQueue::event(F f, A0 a0, A1 a1, A2 a2) {
-    return Event<void()>(this, f, a0, a1, a2);
+template <typename F, typename R>
+Event<void()> EventQueue::event(volatile F func, typename detail::enable_if<
+            detail::is_type<R (F::*)() volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func);
 }
 
-template <typename F, typename A0, typename A1, typename A2, typename A3>
-Event<void()> EventQueue::event(F f, A0 a0, A1 a1, A2 a2, A3 a3) {
-    return Event<void()>(this, f, a0, a1, a2, a3);
-}
-
-template <typename F, typename A0, typename A1, typename A2, typename A3, typename A4>
-Event<void()> EventQueue::event(F f, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-    return Event<void()>(this, f, a0, a1, a2, a3, a4);
+template <typename F, typename R>
+Event<void()> EventQueue::event(const volatile F func, typename detail::enable_if<
+            detail::is_type<R (F::*)() const volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func);
 }
 
 template <typename T, typename R>
@@ -2458,104 +2461,269 @@ Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)() const vo
     return Event<void()>(this, mbed::callback(obj, method));
 }
 
-template <typename T, typename R, typename A0>
-Event<void()> EventQueue::event(T *obj, R (T::*method)(A0), A0 a0) {
-    return Event<void()>(this, mbed::callback(obj, method), a0);
+template <typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(R (*func)(B0), C0 c0) {
+    return Event<void()>(this, func, c0);
 }
 
-template <typename T, typename R, typename A0>
-Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0) const, A0 a0) {
-    return Event<void()>(this, mbed::callback(obj, method), a0);
+template <typename F, typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(F func, C0 c0, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0), &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0);
 }
 
-template <typename T, typename R, typename A0>
-Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0) volatile, A0 a0) {
-    return Event<void()>(this, mbed::callback(obj, method), a0);
+template <typename F, typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(const F func, C0 c0, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0) const, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0);
 }
 
-template <typename T, typename R, typename A0>
-Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0) const volatile, A0 a0) {
-    return Event<void()>(this, mbed::callback(obj, method), a0);
+template <typename F, typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(volatile F func, C0 c0, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0) volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0);
 }
 
-template <typename T, typename R, typename A0, typename A1>
-Event<void()> EventQueue::event(T *obj, R (T::*method)(A0, A1), A0 a0, A1 a1) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1);
+template <typename F, typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(const volatile F func, C0 c0, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0) const volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0);
 }
 
-template <typename T, typename R, typename A0, typename A1>
-Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0, A1) const, A0 a0, A1 a1) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1);
+template <typename T, typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(B0), C0 c0) {
+    return Event<void()>(this, mbed::callback(obj, method), c0);
 }
 
-template <typename T, typename R, typename A0, typename A1>
-Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0, A1) volatile, A0 a0, A1 a1) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1);
+template <typename T, typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(B0) const, C0 c0) {
+    return Event<void()>(this, mbed::callback(obj, method), c0);
 }
 
-template <typename T, typename R, typename A0, typename A1>
-Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0, A1) const volatile, A0 a0, A1 a1) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1);
+template <typename T, typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(B0) volatile, C0 c0) {
+    return Event<void()>(this, mbed::callback(obj, method), c0);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2>
-Event<void()> EventQueue::event(T *obj, R (T::*method)(A0, A1, A2), A0 a0, A1 a1, A2 a2) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2);
+template <typename T, typename R, typename B0, typename C0>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(B0) const volatile, C0 c0) {
+    return Event<void()>(this, mbed::callback(obj, method), c0);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2>
-Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0, A1, A2) const, A0 a0, A1 a1, A2 a2) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2);
+template <typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(R (*func)(B0, B1), C0 c0, C1 c1) {
+    return Event<void()>(this, func, c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2>
-Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0, A1, A2) volatile, A0 a0, A1 a1, A2 a2) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2);
+template <typename F, typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(F func, C0 c0, C1 c1, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1), &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2>
-Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0, A1, A2) const volatile, A0 a0, A1 a1, A2 a2) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2);
+template <typename F, typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(const F func, C0 c0, C1 c1, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1) const, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
-Event<void()> EventQueue::event(T *obj, R (T::*method)(A0, A1, A2, A3), A0 a0, A1 a1, A2 a2, A3 a3) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3);
+template <typename F, typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1) volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
-Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0, A1, A2, A3) const, A0 a0, A1 a1, A2 a2, A3 a3) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3);
+template <typename F, typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(const volatile F func, C0 c0, C1 c1, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1) const volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
-Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0, A1, A2, A3) volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3);
+template <typename T, typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(B0, B1), C0 c0, C1 c1) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
-Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0, A1, A2, A3) const volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3);
+template <typename T, typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(B0, B1) const, C0 c0, C1 c1) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
-Event<void()> EventQueue::event(T *obj, R (T::*method)(A0, A1, A2, A3, A4), A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+template <typename T, typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(B0, B1) volatile, C0 c0, C1 c1) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
-Event<void()> EventQueue::event(const T *obj, R (T::*method)(A0, A1, A2, A3, A4) const, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+template <typename T, typename R, typename B0, typename B1, typename C0, typename C1>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(B0, B1) const volatile, C0 c0, C1 c1) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
-Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+template <typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(R (*func)(B0, B1, B2), C0 c0, C1 c1, C2 c2) {
+    return Event<void()>(this, func, c0, c1, c2);
 }
 
-template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
-Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) const volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-    return Event<void()>(this, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2), &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(const F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2) const, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2) volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(const volatile F func, C0 c0, C1 c1, C2 c2, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2) const volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(B0, B1, B2), C0 c0, C1 c1, C2 c2) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(B0, B1, B2) const, C0 c0, C1 c1, C2 c2) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(B0, B1, B2) volatile, C0 c0, C1 c1, C2 c2) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename C0, typename C1, typename C2>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(B0, B1, B2) const volatile, C0 c0, C1 c1, C2 c2) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2);
+}
+
+template <typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(R (*func)(B0, B1, B2, B3), C0 c0, C1 c1, C2 c2, C3 c3) {
+    return Event<void()>(this, func, c0, c1, c2, c3);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2, B3), &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2, c3);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2, B3) const, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2, c3);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2, B3) volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2, c3);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2, B3) const volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2, c3);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(B0, B1, B2, B3), C0 c0, C1 c1, C2 c2, C3 c3) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2, c3);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(B0, B1, B2, B3) const, C0 c0, C1 c1, C2 c2, C3 c3) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2, c3);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(B0, B1, B2, B3) volatile, C0 c0, C1 c1, C2 c2, C3 c3) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2, c3);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename C0, typename C1, typename C2, typename C3>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3) const volatile, C0 c0, C1 c1, C2 c2, C3 c3) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2, c3);
+}
+
+template <typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(R (*func)(B0, B1, B2, B3, B4), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+    return Event<void()>(this, func, c0, c1, c2, c3, c4);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2, B3, B4), &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2, c3, c4);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(const F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2, B3, B4) const, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2, c3, c4);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2, B3, B4) volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2, c3, c4);
+}
+
+template <typename F, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(const volatile F func, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4, typename detail::enable_if<
+            detail::is_type<R (F::*)(B0, B1, B2, B3, B4) const volatile, &F::operator()>::value
+        >::type) {
+    return Event<void()>(this, func, c0, c1, c2, c3, c4);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(T *obj, R (T::*method)(B0, B1, B2, B3, B4), C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2, c3, c4);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(const T *obj, R (T::*method)(B0, B1, B2, B3, B4) const, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2, c3, c4);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4) volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2, c3, c4);
+}
+
+template <typename T, typename R, typename B0, typename B1, typename B2, typename B3, typename B4, typename C0, typename C1, typename C2, typename C3, typename C4>
+Event<void()> EventQueue::event(const volatile T *obj, R (T::*method)(B0, B1, B2, B3, B4) const volatile, C0 c0, C1 c1, C2 c2, C3 c3, C4 c4) {
+    return Event<void()>(this, mbed::callback(obj, method), c0, c1, c2, c3, c4);
 }
 
 }
