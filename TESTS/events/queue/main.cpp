@@ -216,6 +216,22 @@ void event_class_helper_test() {
     TEST_ASSERT_EQUAL(counter, 15);
 }
 
+void event_inference_test() {
+    counter = 0;
+    EventQueue queue (2048);
+
+    queue.event(count5, 1, 1, 1, 1, 1).post();
+    queue.event(count5, 1, 1, 1, 1).post(1);
+    queue.event(count5, 1, 1, 1).post(1, 1);
+    queue.event(count5, 1, 1).post(1, 1, 1);
+    queue.event(count5, 1).post(1, 1, 1, 1);
+    queue.event(count5).post(1, 1, 1, 1, 1);
+
+    queue.dispatch(0);
+
+    TEST_ASSERT_EQUAL(counter, 30);
+}
+
 
 // Test setup
 utest::v1::status_t test_setup(const size_t number_of_cases) {
@@ -240,6 +256,7 @@ const Case cases[] = {
     Case("Testing event cancel 1", cancel_test1<20>),
     Case("Testing the event class", event_class_test),
     Case("Testing the event class helpers", event_class_helper_test),
+    Case("Testing the event inference", event_inference_test),
 };
 
 Specification specification(test_setup, cases);
