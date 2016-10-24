@@ -232,7 +232,7 @@ public:
      */
     template <typename T, typename R>
     int call(T *obj, R (T::*method)()) {
-        return call(mbed::callback(obj, method));
+        return call(mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue
@@ -240,7 +240,7 @@ public:
      */
     template <typename T, typename R>
     int call(const T *obj, R (T::*method)() const) {
-        return call(mbed::callback(obj, method));
+        return call(mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue
@@ -248,7 +248,7 @@ public:
      */
     template <typename T, typename R>
     int call(volatile T *obj, R (T::*method)() volatile) {
-        return call(mbed::callback(obj, method));
+        return call(mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue
@@ -256,7 +256,7 @@ public:
      */
     template <typename T, typename R>
     int call(const volatile T *obj, R (T::*method)() const volatile) {
-        return call(mbed::callback(obj, method));
+        return call(mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue
@@ -264,7 +264,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call(T *obj, R (T::*method)(A0), A0 a0) {
-        return call(mbed::callback(obj, method), a0);
+        return call(mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue
@@ -272,7 +272,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call(const T *obj, R (T::*method)(A0) const, A0 a0) {
-        return call(mbed::callback(obj, method), a0);
+        return call(mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue
@@ -280,7 +280,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call(volatile T *obj, R (T::*method)(A0) volatile, A0 a0) {
-        return call(mbed::callback(obj, method), a0);
+        return call(mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue
@@ -288,7 +288,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call(const volatile T *obj, R (T::*method)(A0) const volatile, A0 a0) {
-        return call(mbed::callback(obj, method), a0);
+        return call(mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue
@@ -296,7 +296,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call(T *obj, R (T::*method)(A0, A1), A0 a0, A1 a1) {
-        return call(mbed::callback(obj, method), a0, a1);
+        return call(mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue
@@ -304,7 +304,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call(const T *obj, R (T::*method)(A0, A1) const, A0 a0, A1 a1) {
-        return call(mbed::callback(obj, method), a0, a1);
+        return call(mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue
@@ -312,7 +312,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call(volatile T *obj, R (T::*method)(A0, A1) volatile, A0 a0, A1 a1) {
-        return call(mbed::callback(obj, method), a0, a1);
+        return call(mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue
@@ -320,7 +320,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call(const volatile T *obj, R (T::*method)(A0, A1) const volatile, A0 a0, A1 a1) {
-        return call(mbed::callback(obj, method), a0, a1);
+        return call(mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue
@@ -328,7 +328,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call(T *obj, R (T::*method)(A0, A1, A2), A0 a0, A1 a1, A2 a2) {
-        return call(mbed::callback(obj, method), a0, a1, a2);
+        return call(mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue
@@ -336,7 +336,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call(const T *obj, R (T::*method)(A0, A1, A2) const, A0 a0, A1 a1, A2 a2) {
-        return call(mbed::callback(obj, method), a0, a1, a2);
+        return call(mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue
@@ -344,7 +344,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call(volatile T *obj, R (T::*method)(A0, A1, A2) volatile, A0 a0, A1 a1, A2 a2) {
-        return call(mbed::callback(obj, method), a0, a1, a2);
+        return call(mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue
@@ -352,7 +352,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call(const volatile T *obj, R (T::*method)(A0, A1, A2) const volatile, A0 a0, A1 a1, A2 a2) {
-        return call(mbed::callback(obj, method), a0, a1, a2);
+        return call(mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue
@@ -360,7 +360,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call(T *obj, R (T::*method)(A0, A1, A2, A3), A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call(mbed::callback(obj, method), a0, a1, a2, a3);
+        return call(mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue
@@ -368,7 +368,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call(const T *obj, R (T::*method)(A0, A1, A2, A3) const, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call(mbed::callback(obj, method), a0, a1, a2, a3);
+        return call(mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue
@@ -376,7 +376,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call(volatile T *obj, R (T::*method)(A0, A1, A2, A3) volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call(mbed::callback(obj, method), a0, a1, a2, a3);
+        return call(mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue
@@ -384,7 +384,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call(const volatile T *obj, R (T::*method)(A0, A1, A2, A3) const volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call(mbed::callback(obj, method), a0, a1, a2, a3);
+        return call(mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue
@@ -392,7 +392,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call(T *obj, R (T::*method)(A0, A1, A2, A3, A4), A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call(mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call(mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue
@@ -400,7 +400,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call(const T *obj, R (T::*method)(A0, A1, A2, A3, A4) const, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call(mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call(mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue
@@ -408,7 +408,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call(volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call(mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call(mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue
@@ -416,7 +416,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call(const volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) const volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call(mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call(mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -497,7 +497,7 @@ public:
      */
     template <typename T, typename R>
     int call_in(int ms, T *obj, R (T::*method)()) {
-        return call_in(ms, mbed::callback(obj, method));
+        return call_in(ms, mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue after a specified delay
@@ -505,7 +505,7 @@ public:
      */
     template <typename T, typename R>
     int call_in(int ms, const T *obj, R (T::*method)() const) {
-        return call_in(ms, mbed::callback(obj, method));
+        return call_in(ms, mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue after a specified delay
@@ -513,7 +513,7 @@ public:
      */
     template <typename T, typename R>
     int call_in(int ms, volatile T *obj, R (T::*method)() volatile) {
-        return call_in(ms, mbed::callback(obj, method));
+        return call_in(ms, mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue after a specified delay
@@ -521,7 +521,7 @@ public:
      */
     template <typename T, typename R>
     int call_in(int ms, const volatile T *obj, R (T::*method)() const volatile) {
-        return call_in(ms, mbed::callback(obj, method));
+        return call_in(ms, mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue after a specified delay
@@ -529,7 +529,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call_in(int ms, T *obj, R (T::*method)(A0), A0 a0) {
-        return call_in(ms, mbed::callback(obj, method), a0);
+        return call_in(ms, mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -537,7 +537,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call_in(int ms, const T *obj, R (T::*method)(A0) const, A0 a0) {
-        return call_in(ms, mbed::callback(obj, method), a0);
+        return call_in(ms, mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -545,7 +545,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call_in(int ms, volatile T *obj, R (T::*method)(A0) volatile, A0 a0) {
-        return call_in(ms, mbed::callback(obj, method), a0);
+        return call_in(ms, mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -553,7 +553,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call_in(int ms, const volatile T *obj, R (T::*method)(A0) const volatile, A0 a0) {
-        return call_in(ms, mbed::callback(obj, method), a0);
+        return call_in(ms, mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -561,7 +561,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call_in(int ms, T *obj, R (T::*method)(A0, A1), A0 a0, A1 a1) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1);
+        return call_in(ms, mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -569,7 +569,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call_in(int ms, const T *obj, R (T::*method)(A0, A1) const, A0 a0, A1 a1) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1);
+        return call_in(ms, mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -577,7 +577,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call_in(int ms, volatile T *obj, R (T::*method)(A0, A1) volatile, A0 a0, A1 a1) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1);
+        return call_in(ms, mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -585,7 +585,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call_in(int ms, const volatile T *obj, R (T::*method)(A0, A1) const volatile, A0 a0, A1 a1) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1);
+        return call_in(ms, mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -593,7 +593,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call_in(int ms, T *obj, R (T::*method)(A0, A1, A2), A0 a0, A1 a1, A2 a2) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -601,7 +601,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call_in(int ms, const T *obj, R (T::*method)(A0, A1, A2) const, A0 a0, A1 a1, A2 a2) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -609,7 +609,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call_in(int ms, volatile T *obj, R (T::*method)(A0, A1, A2) volatile, A0 a0, A1 a1, A2 a2) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -617,7 +617,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call_in(int ms, const volatile T *obj, R (T::*method)(A0, A1, A2) const volatile, A0 a0, A1 a1, A2 a2) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -625,7 +625,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call_in(int ms, T *obj, R (T::*method)(A0, A1, A2, A3), A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -633,7 +633,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call_in(int ms, const T *obj, R (T::*method)(A0, A1, A2, A3) const, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -641,7 +641,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call_in(int ms, volatile T *obj, R (T::*method)(A0, A1, A2, A3) volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -649,7 +649,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call_in(int ms, const volatile T *obj, R (T::*method)(A0, A1, A2, A3) const volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -657,7 +657,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_in(int ms, T *obj, R (T::*method)(A0, A1, A2, A3, A4), A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -665,7 +665,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_in(int ms, const T *obj, R (T::*method)(A0, A1, A2, A3, A4) const, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -673,7 +673,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_in(int ms, volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue after a specified delay
@@ -681,7 +681,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_in(int ms, const volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) const volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_in(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call_in(ms, mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue periodically
@@ -763,7 +763,7 @@ public:
      */
     template <typename T, typename R>
     int call_every(int ms, T *obj, R (T::*method)()) {
-        return call_every(ms, mbed::callback(obj, method));
+        return call_every(ms, mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue periodically
@@ -771,7 +771,7 @@ public:
      */
     template <typename T, typename R>
     int call_every(int ms, const T *obj, R (T::*method)() const) {
-        return call_every(ms, mbed::callback(obj, method));
+        return call_every(ms, mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue periodically
@@ -779,7 +779,7 @@ public:
      */
     template <typename T, typename R>
     int call_every(int ms, volatile T *obj, R (T::*method)() volatile) {
-        return call_every(ms, mbed::callback(obj, method));
+        return call_every(ms, mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue periodically
@@ -787,7 +787,7 @@ public:
      */
     template <typename T, typename R>
     int call_every(int ms, const volatile T *obj, R (T::*method)() const volatile) {
-        return call_every(ms, mbed::callback(obj, method));
+        return call_every(ms, mbed::Callback<void()>(obj, method));
     }
 
     /** Calls an event on the queue periodically
@@ -795,7 +795,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call_every(int ms, T *obj, R (T::*method)(A0), A0 a0) {
-        return call_every(ms, mbed::callback(obj, method), a0);
+        return call_every(ms, mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue periodically
@@ -803,7 +803,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call_every(int ms, const T *obj, R (T::*method)(A0) const, A0 a0) {
-        return call_every(ms, mbed::callback(obj, method), a0);
+        return call_every(ms, mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue periodically
@@ -811,7 +811,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call_every(int ms, volatile T *obj, R (T::*method)(A0) volatile, A0 a0) {
-        return call_every(ms, mbed::callback(obj, method), a0);
+        return call_every(ms, mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue periodically
@@ -819,7 +819,7 @@ public:
      */
     template <typename T, typename R, typename A0>
     int call_every(int ms, const volatile T *obj, R (T::*method)(A0) const volatile, A0 a0) {
-        return call_every(ms, mbed::callback(obj, method), a0);
+        return call_every(ms, mbed::Callback<void(A0)>(obj, method), a0);
     }
 
     /** Calls an event on the queue periodically
@@ -827,7 +827,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call_every(int ms, T *obj, R (T::*method)(A0, A1), A0 a0, A1 a1) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1);
+        return call_every(ms, mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue periodically
@@ -835,7 +835,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call_every(int ms, const T *obj, R (T::*method)(A0, A1) const, A0 a0, A1 a1) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1);
+        return call_every(ms, mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue periodically
@@ -843,7 +843,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call_every(int ms, volatile T *obj, R (T::*method)(A0, A1) volatile, A0 a0, A1 a1) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1);
+        return call_every(ms, mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue periodically
@@ -851,7 +851,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1>
     int call_every(int ms, const volatile T *obj, R (T::*method)(A0, A1) const volatile, A0 a0, A1 a1) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1);
+        return call_every(ms, mbed::Callback<void(A0, A1)>(obj, method), a0, a1);
     }
 
     /** Calls an event on the queue periodically
@@ -859,7 +859,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call_every(int ms, T *obj, R (T::*method)(A0, A1, A2), A0 a0, A1 a1, A2 a2) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue periodically
@@ -867,7 +867,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call_every(int ms, const T *obj, R (T::*method)(A0, A1, A2) const, A0 a0, A1 a1, A2 a2) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue periodically
@@ -875,7 +875,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call_every(int ms, volatile T *obj, R (T::*method)(A0, A1, A2) volatile, A0 a0, A1 a1, A2 a2) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue periodically
@@ -883,7 +883,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2>
     int call_every(int ms, const volatile T *obj, R (T::*method)(A0, A1, A2) const volatile, A0 a0, A1 a1, A2 a2) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2)>(obj, method), a0, a1, a2);
     }
 
     /** Calls an event on the queue periodically
@@ -891,7 +891,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call_every(int ms, T *obj, R (T::*method)(A0, A1, A2, A3), A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2, a3);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue periodically
@@ -899,7 +899,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call_every(int ms, const T *obj, R (T::*method)(A0, A1, A2, A3) const, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2, a3);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue periodically
@@ -907,7 +907,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call_every(int ms, volatile T *obj, R (T::*method)(A0, A1, A2, A3) volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2, a3);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue periodically
@@ -915,7 +915,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3>
     int call_every(int ms, const volatile T *obj, R (T::*method)(A0, A1, A2, A3) const volatile, A0 a0, A1 a1, A2 a2, A3 a3) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2, a3);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2, A3)>(obj, method), a0, a1, a2, a3);
     }
 
     /** Calls an event on the queue periodically
@@ -923,7 +923,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_every(int ms, T *obj, R (T::*method)(A0, A1, A2, A3, A4), A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue periodically
@@ -931,7 +931,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_every(int ms, const T *obj, R (T::*method)(A0, A1, A2, A3, A4) const, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue periodically
@@ -939,7 +939,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_every(int ms, volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Calls an event on the queue periodically
@@ -947,7 +947,7 @@ public:
      */
     template <typename T, typename R, typename A0, typename A1, typename A2, typename A3, typename A4>
     int call_every(int ms, const volatile T *obj, R (T::*method)(A0, A1, A2, A3, A4) const volatile, A0 a0, A1 a1, A2 a2, A3 a3, A4 a4) {
-        return call_every(ms, mbed::callback(obj, method), a0, a1, a2, a3, a4);
+        return call_every(ms, mbed::Callback<void(A0, A1, A2, A3, A4)>(obj, method), a0, a1, a2, a3, a4);
     }
 
     /** Creates an event bound to the event queue
